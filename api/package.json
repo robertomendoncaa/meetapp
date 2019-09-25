@@ -6,7 +6,14 @@
   "repository": "https://github.com/robertomendoncaa/meetapp.git",
   "author": "Roberto Mendonca",
   "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2",
+    "sucrase": "^3.10.1"
   }
 }
