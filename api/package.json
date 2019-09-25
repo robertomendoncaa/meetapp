@@ -1,0 +1,12 @@
+{
+  "name": "meetapp-api",
+  "version": "1.0.0",
+  "description": "Meetapp API",
+  "main": "index.js",
+  "repository": "https://github.com/robertomendoncaa/meetapp.git",
+  "author": "Roberto Mendonca",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
