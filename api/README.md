@@ -5,5 +5,11 @@
   yarn sequelize migration:create --name=create-users
   yarn sequelize migration:create --name=create-files
   yarn sequelize migration:create --name=add-avatar-field-to-users
+  yarn sequelize migration:create --name=create-meetups
+  yarn sequelize migration:create --name=create-subscriptions
 
   yarn sequelize db:migrate
+
+
+provider -> organizer
+appointments -> meetups
