@@ -36,9 +36,16 @@ class UserController {
   }
 
   async index(req, res) {
-    const user = await User.findAll();
+    const { page = 1 } = req.query;
 
-    return res.json(user);
+    const users = await User.findAll({
+      attributes: ['id', 'name', 'email'],
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
+
+    return res.json(users);
   }
 
   async update(req, res) {

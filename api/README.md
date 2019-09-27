@@ -9,6 +9,10 @@
   yarn sequelize migration:create --name=create-subscriptions
 
   yarn sequelize db:migrate
+  yarn sequelize db:migrate:undo
+ou
+  npx sequelize-cli db:migrate
+  npx sequelize-cli db:migrate:undo
 
 
 provider -> organizer
