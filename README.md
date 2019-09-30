@@ -24,11 +24,11 @@ Se já possuir o Postgres instalado em sua máquina, rodar na porta ```5433:5432
 ```yarn sequelize db:migrate```
 
 - Renomear arquivo ```.env.example``` para ```.env```
-- Incluir seus dados de configurações: banco de dados, senha, email...
+- Incluir seus dados de configurações: banco de dados, host, senha, email...
 
 #### Rodar API/Backend
 ```sh
-# modo desenvolimento
+# modo desenvolvimento
 yarn dev
 # monitoramento de filas, envio de e-mails
 yarn queue
