@@ -1,8 +1,14 @@
 import { Op } from 'sequelize';
+import { isBefore, format } from 'date-fns';
+import us from 'date-fns/locale/en-US';
 
 import User from '../models/User';
 import Meetup from '../models/Meetup';
 import Subscription from '../models/Subscription';
+
+import Notification from '../schemas/Notification';
+import Queue from '../../lib/Queue';
+import SubscriptionMail from '../jobs/SubscriptionMail';
 
 class SubscriptionController {
   async index(req, res) {
@@ -30,13 +36,18 @@ class SubscriptionController {
   async store(req, res) {
     const user = await User.findByPk(req.userId);
     const meetup = await Meetup.findByPk(req.params.meetupId, {
-      include: [User],
+      include: [
+        {
+          model: User,
+          attributes: ['name', 'email', 'id'],
+        },
+      ],
     });
 
     if (meetup.user_id === req.userId) {
       return res
         .status(400)
-        .json({ error: "Can't subscribe to you own meetups" });
+        .json({ error: "Can't subscribe to your own meetups" });
     }
 
     if (meetup.past) {
@@ -67,6 +78,15 @@ class SubscriptionController {
     const subscription = await Subscription.create({
       user_id: user.id,
       meetup_id: meetup.id,
+    });
+
+    const formattedDate = format(
+      meetup.date, "'day' dd 'of' MMMM', at' H:mm'h'  ", { locale: us }
+    );
+
+    await Notification.create({
+      content: `New subscriber ${user.name} for your Meetup, ${formattedDate}`,
+      user: meetup.user_id,
     });
 
     await Queue.add(SubscriptionMail.key, {

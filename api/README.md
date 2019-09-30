@@ -1,6 +1,9 @@
 ### Docker Container
   docker run --name database -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=meetapp -p 5433:5432 -d postgres
 
+  docker run --name mongomeetapp -p 27017:27017 -d -t mongo
+  docker run --name redismeetapp -p 6379:6379 -d -t redis:alpine
+
 ### Sequelize Migrations
   yarn sequelize migration:create --name=create-users
   yarn sequelize migration:create --name=create-files
@@ -15,5 +18,6 @@ ou
   npx sequelize-cli db:migrate:undo
 
 
-provider -> organizer
-appointments -> meetups
+## Running
+  yarn dev -> development mode, NODE_ENV
+  yarn queue -> backgound jobs, send notification emails

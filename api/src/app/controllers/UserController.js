@@ -3,6 +3,19 @@ import * as Yup from 'yup';
 import User from '../models/User';
 
 class UserController {
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const users = await User.findAll({
+      attributes: ['id', 'name', 'email'],
+      order: ['id'],
+      limit: 10,
+      offset: (page - 1) * 10,
+    });
+
+    return res.json(users);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -35,19 +48,6 @@ class UserController {
     });
   }
 
-  async index(req, res) {
-    const { page = 1 } = req.query;
-
-    const users = await User.findAll({
-      attributes: ['id', 'name', 'email'],
-      order: ['id'],
-      limit: 10,
-      offset: (page - 1) * 10,
-    });
-
-    return res.json(users);
-  }
-
   async update(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string(),
@@ -71,7 +71,7 @@ class UserController {
 
     const user = await User.findByPk(req.userId);
 
-    if (email !== user.email) {
+    if (email && email !== user.email) {
       const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
@@ -84,12 +84,12 @@ class UserController {
     if (oldPassword && !(await user.checkPassword(oldPassword))) {
       return res.status(401).json({ error: 'Password does not match' });
     }
-    const { id, name } = await user.update(req.body);
+    const { id, name, email: userEmail } = await user.update(req.body);
 
     return res.json({
       id,
       name,
-      email,
+      email: userEmail,
     });
   }
 }
