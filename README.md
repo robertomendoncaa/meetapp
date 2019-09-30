@@ -1,9 +1,9 @@
 # MeetApp
-Projeto desenvolvido como desafio final e certificação do Bootcamp GoStack da Rocketseat.
+Projeto desenvolvido como desafio final e certificação do [Bootcamp GoStack da Rocketseat.](https://rocketseat.com.br/bootcamp)
 
 ## Instalação
 ### Requerimentos
-Para rodar essa aplicação completa é necessário o NodeJs, ReactJs, React Native, Docker e emulador android (Android Studio ou Genymotion).
+Para rodar essa aplicação completa é necessário o [NodeJs](https://nodejs.org/en/), [ReactJs](https://reactjs.org), [React Native](https://facebook.github.io/react-native/), [Docker](https://www.docker.com) e emulador android ([Android Studio](https://developer.android.com/studio) ou [Genymotion](https://www.genymotion.com)).
 
 ### Comandos
 #### Instalação da API/Backend
@@ -27,7 +27,9 @@ Se já possuir o Postgres instalado em sua máquina, rodar na porta ```5433:5432
 - Incluir seus dados de configurações: banco de dados, senha, email...
 
 #### Rodar API/Backend
-```
-yarn dev # development mode NODE_ENV
-yarn queue # backgound jobs nodemailer, send notification emails
+```sh
+# modo desenvolimento
+yarn dev
+# monitoramento de filas, envio de e-mails
+yarn queue
 ```
