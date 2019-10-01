@@ -24,7 +24,10 @@ export default function Routes() {
       <Route path="/new-meetup" component={New} isPrivate />
       <Route path="/edit-meetup" component={Edit} isPrivate />
 
-      <Route path="/" component={() => <h1>Essa página não existe! Erro 404</h1>} />
+      <Route
+        path="/"
+        component={() => <h1>Essa página não existe! Erro 404</h1>}
+      />
     </Switch>
   );
 }
