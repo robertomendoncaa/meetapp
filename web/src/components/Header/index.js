@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import Notifications from '~/components/Notifications';
 import { signOut } from '~/store/modules/auth/actions';
 
 import { Container, Content, Profile } from './styles';
@@ -19,12 +20,12 @@ export default function Header() {
     <Container>
       <Content>
         <nav>
-          <Link to="/dashboard">
-            <img src={logo} alt="Meetapp" />
-          </Link>
+          <img src={logo} alt="Meetapp" />
+          <Link to="/dashboard">DASHBOARD</Link>
         </nav>
 
         <aside>
+          <Notifications />
           <Profile>
             <div>
               <strong>{profile.name}</strong>

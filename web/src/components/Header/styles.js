@@ -17,9 +17,20 @@ export const Content = styled.div`
     display: flex;
     align-items: center;
 
-    a:hover {
-      opacity: 0.8;
-      transition: opacity 0.2s;
+    img {
+      margin-right: 20px;
+      padding-right: 20px;
+      border-right: 1px solid #333;
+    }
+
+    a {
+      /* font-weight: bold; */
+      color: #fff;
+
+      &:hover {
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
     }
   }
 
@@ -33,6 +44,7 @@ export const Profile = styled.div`
   display: flex;
   margin-left: 20px;
   padding-left: 20px;
+  border-left: 1px solid #333;
 
   div {
     text-align: right;
