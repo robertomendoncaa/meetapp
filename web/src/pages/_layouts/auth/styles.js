@@ -47,12 +47,12 @@ export const Content = styled.div`
       border-radius: 4px;
       font-size: 16px;
       font-weight: bold;
-      background: #F94D6A;
+      background: #D44059;
       color: #fff;
       transition: background 0.2s;
 
       &:hover {
-        background: ${darken(0.08, '#F94D6A')};
+        background: ${darken(0.08, '#D44059')};
       }
     }
 

@@ -34,10 +34,10 @@ export const Container = styled.div`
   }
 
   button {
-    float: right;
+    height: 42px;
     margin: 10px 0;
-    padding: 0 50px;
-    height: 44px;
+    padding: 0 30px;
+    align-self: flex-end;
     border: 0;
     border-radius: 4px;
     font-size: 16px;
