@@ -20,12 +20,14 @@ class Meetup extends Model {
         sequelize,
       }
     );
+
+    return this;
   }
 
   static associate(models) {
-    this.hasMany(models.Subscription, { foreignKey: 'meetup_id' });
-    this.belongsTo(models.File, { foreignKey: 'banner_id', as: 'banner' });
+    // this.hasMany(models.Subscription, { foreignKey: 'meetup_id' });
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.File, { foreignKey: 'banner_id', as: 'banner' });
   }
 }
 

@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 import { isBefore, format } from 'date-fns';
-import us from 'date-fns/locale/en-US';
+import pt from 'date-fns/locale/pt-BR';
 
 import User from '../models/User';
 import Meetup from '../models/Meetup';
@@ -81,7 +81,7 @@ class SubscriptionController {
     });
 
     const formattedDate = format(
-      meetup.date, "'day' dd 'of' MMMM', at' H:mm'h'  ", { locale: us }
+      meetup.date, "'day' dd 'of' MMMM', at' H:mm'h'  ", { locale: pt }
     );
 
     await Notification.create({

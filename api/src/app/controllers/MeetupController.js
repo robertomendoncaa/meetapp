@@ -20,19 +20,19 @@ class MeetupController {
 
     const meetups = await Meetup.findAll({
       where,
-      include: [User],
-      //   {
-      //     model: User,
-      //     as: 'user',
-      //     attributes: ['id', 'name', 'email'],
-      //   },
-      //   {
-      //     model: File,
-      //     as: 'banner',
-      //     attributes: ['id', 'url', 'path'],
-      //   },
-      // ],
-      // order: ['date'],
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name'],
+        },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+      order: [['date', 'ASC']],
       limit: 10,
       offset: 10 * page - 10,
     });
