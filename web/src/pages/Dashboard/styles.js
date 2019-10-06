@@ -15,14 +15,12 @@ export const Container = styled.div`
     strong {
       color: #fff;
       font-size: 32px;
-      font-family: 'Roboto';
-      opacity: 0.9;
     }
   }
 `;
 
 export const Button = styled.button`
-  height: 40px;
+  height: 42px;
   margin: 5px 0 0;
   padding: 0 30px;
   align-self: flex-end;
@@ -31,6 +29,7 @@ export const Button = styled.button`
   border: 0;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: bold;
   transition: background 0.2s;
 
   &:hover {
@@ -44,11 +43,13 @@ export const List = styled.li`
   margin: 10px 0;
   padding: 20px 30px;
   border-radius: 4px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   transition: all 0.2s;
 
+  opacity: ${props => (props.past ? 0.5 : 1)};
+
   &:hover {
-    background: ${lighten(0.08, 'rgba(0, 0, 0, 0.1)')};
+    background: ${lighten(0.5, 'rgba(0, 0, 0, 0.1)')};
     cursor: pointer;
   }
 `;
@@ -59,11 +60,6 @@ export const Title = styled.div`
   color: #fff;
   font-size: 18px;
   font-weight: bold;
-  opacity: 0.9;
-
-  p {
-    margin: 0 8px;
-  }
 `;
 
 export const Date = styled.div`

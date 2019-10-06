@@ -20,20 +20,11 @@ export default function Profile() {
 
         <Input name="name" placeholder="Nome completo" />
         <Input name="email" type="email" placeholder="Seu endereço de e-mail" />
-
         <hr />
-
-        <Input
-          type="password"
-          name="oldPassword"
-          placeholder="Senha atual"
-        />
+        <Input type="password" name="oldPassword" placeholder="Senha atual" />
         <Input type="password" name="password" placeholder="Nova senha" />
-        <Input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirmação de senha"
-        />
+        <Input type="password" name="confirmPassword" placeholder="Confirmação de senha" />
+
         <button type="submit">Salvar perfil</button>
       </Form>
     </Container>

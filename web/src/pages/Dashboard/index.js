@@ -3,19 +3,13 @@ import { MdHighlightOff } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
-import {
-  Container,
-  Button,
-  List,
-  Title,
-  Date,
-} from './styles';
-
-import api from '~/services/api';
 import history from '~/services/history';
+import api from '~/services/api';
+
+import { Container, Button, List, Title, Date } from './styles';
 
 export default function Dashboard() {
-  const [meetup, setMeetup] = useState([]);
+  const [meetups, setMeetups] = useState([]);
 
   function hanldeNewMeetup() {
     history.push('/new-meetup');
@@ -31,30 +25,34 @@ export default function Dashboard() {
 
       const data = response.data.map(meetup => ({
         ...meetup,
-        formatedDate: format(parseISO(meetup.date), "d 'de' MMMM, 'às' HH'h'", {
+        formattedDate: format(parseISO(meetup.date), "d 'de' MMMM, 'às' HH'h'", {
           locale: pt,
         }),
       }));
-      setMeetup(data);
+
+      setMeetups(data);
     }
+
     loadMeetups();
-  }, []);
+  }, [meetups]);
 
   return (
     <Container>
       <header>
         <strong>Meus meetups</strong>
-        <Button onClick={hanldeNewMeetup}>Novo meetup</Button>
+        <Button onClick={hanldeNewMeetup}>
+          {/* <MdLoyalty size={20} color="#fff" /> */} Novo meetup
+        </Button>
       </header>
       <ul>
-        {meetup.map(meetup => (
-          <List key={meetup.id} onClick={() => handleDetails(meetup)}>
+        {meetups.map(item => (
+          <List key={item.id} onClick={() => handleDetails(meetups)} past={item.past}>
             <Title>
-              <p>{meetup.title}</p>
+              <strong>{item.title}</strong>
             </Title>
             <Date>
-              <span>{meetup.formatedDate}</span>
-              <MdHighlightOff size={26} color="#fff" />
+              <span>{item.formattedDate}</span>
+              <MdHighlightOff size={26} color="#ffff" />
             </Date>
           </List>
         ))}
