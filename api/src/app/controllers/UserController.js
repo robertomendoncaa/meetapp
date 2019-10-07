@@ -36,14 +36,14 @@ class UserController {
     const userExists = await User.findOne({ where: { email: req.body.email } });
 
     if (userExists) {
-      return res.status(400).json({
-        error: 'This e-mail is already registered, please try another.',
-      });
+      return res.status(400).json({ error: 'User already exists.' });
     }
 
     // const { id, name, email } = await User.create(req.body);
     const user = await User.create(req.body);
+
     const { id, name, email } = user;
+
     await Notification.create({
       user: id,
       content: `Welcome to Meetapp!`,
@@ -79,12 +79,12 @@ class UserController {
 
     const user = await User.findByPk(req.userId);
 
-    if (email && email !== user.email) {
+    if (email !== user.email) {
       const userExists = await User.findOne({ where: { email } });
 
       if (userExists) {
         return res.status(400).json({
-          error: 'This email is already registered, please try another.',
+          error: 'User already exists.',
         });
       }
     }

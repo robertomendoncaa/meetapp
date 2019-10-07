@@ -7,7 +7,7 @@ Para rodar essa aplicação completa é necessário o [NodeJs](https://nodejs.or
 
 ### Comandos
 #### Instalação da API/Backend
-Clone o repositório e instale as dependências dentro da pasta ```meetapp/api```
+Clone o repositório e instale as dependências dentro da pasta `meetapp/api`
 ```
 git clone https://github.com/robertomendoncaa/meetapp.git
 cd meetapp/api
@@ -20,18 +20,18 @@ docker run --name database -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=meetapp 
 docker run --name mongomeetapp -p 27017:27017 -d -t mongo
 docker run --name redismeetapp -p 6379:6379 -d -t redis:alpine
 ```
-> Se já possuir o **Postgres** instalado em sua máquina, fazer redirecionamento de porta ```5433:5432```
+> Se já possuir o **Postgres** instalado em sua máquina, fazer redirecionamento de porta `5433:5432`
 #### Criação das tabelas do banco de dados
-Cria as tabelas do banco de dados a partir das migrations da pasta ```src/database/migrations```
+Cria as tabelas do banco de dados a partir das migrations da pasta `src/database/migrations`
 
-```yarn sequelize db:migrate```
+`yarn migrate`
 
-> Renomear arquivo ```.env.example``` para ```.env```
+> Renomear arquivo `.env.example` para `.env`
 
 > Incluir seus dados de configurações: banco de dados, host, senha, email...
 
 #### Rodar API/Backend
-```sh
+```bash
 # modo desenvolvimento
   yarn dev
 # monitoramento de filas, envio de e-mails
