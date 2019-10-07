@@ -67,6 +67,13 @@ export const Profile = styled.div`
         opacity: 0.8;
       }
     }
+
+    img {
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+    }
   }
 
   button {
