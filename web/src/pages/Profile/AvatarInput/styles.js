@@ -6,6 +6,7 @@ export const Container = styled.div`
 
   label {
     cursor: pointer;
+    transition: opacity 0.2s;
 
     &:hover {
       opacity: 0.8;

@@ -20,17 +20,23 @@ export const Container = styled.div`
 `;
 
 export const Button = styled.button`
-  height: 42px;
-  margin: 5px 0 0;
-  padding: 0 30px;
-  align-self: flex-end;
-  background: #F94D6A;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  margin: 5px 10px;
+  padding: 0 20px;
   border: 0;
   border-radius: 4px;
   font-size: 16px;
   font-weight: bold;
+  color: #fff;
+  background: #F94D6A;
   transition: background 0.2s;
+
+  svg {
+    margin-right: 10px;
+  }
 
   &:hover {
     background: ${darken(0.08, '#F94D6A')};

@@ -34,9 +34,9 @@ export const Badge = styled.button`
 export const NotificationList = styled.div`
   position: absolute;
   width: 260px;
-  left: calc(50% - 78px);
+  left: calc(50% - 130px);
   top: calc(100% + 30px);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 4px;
   padding: 15px 5px;
   display: ${props => (props.visible ? 'block' : 'none')};
@@ -44,13 +44,13 @@ export const NotificationList = styled.div`
   &::before {
     content: '';
     position: absolute;
-    left: calc(30% - 20px);
+    left: calc(50% - 20px);
     top: -20px;
     width: 0;
     height: 0;
     border-left: 20px solid transparent;
     border-right: 20px solid transparent;
-    border-bottom: 20px solid rgba(0, 0, 0, 0.6);
+    border-bottom: 20px solid rgba(0, 0, 0, 0.5);
   }
 `;
 

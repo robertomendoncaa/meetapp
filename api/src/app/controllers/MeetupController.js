@@ -41,6 +41,60 @@ class MeetupController {
     return res.json(meetups);
   }
 
+  async show(req, res) {
+    const { id } = req.params;
+
+    const meetapp = await Meetapp.findByPk(id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name'],
+          include: [
+            {
+              model: File,
+              as: 'avatar',
+              attributes: ['id', 'path', 'url'],
+            },
+          ],
+        },
+        {
+          model: File,
+          as: 'banner',
+          attributes: ['id', 'path', 'url'],
+        },
+      ],
+    });
+
+    if (!meetapp)
+      return res.status(400).json({ error: 'Meetapp does not exists' });
+
+    const {
+      title,
+      description,
+      location,
+      date,
+      user,
+      past,
+      cancelable,
+      canceled_at,
+      banner,
+    } = meetapp;
+
+    return res.status(200).json({
+      id,
+      title,
+      description,
+      location,
+      date,
+      user,
+      past,
+      cancelable,
+      canceled_at,
+      banner,
+    });
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),

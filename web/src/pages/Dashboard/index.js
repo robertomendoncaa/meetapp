@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdHighlightOff } from 'react-icons/md';
+import { MdHighlightOff, MdLoyalty } from 'react-icons/md';
 import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
@@ -10,14 +10,6 @@ import { Container, Button, List, Title, Date } from './styles';
 
 export default function Dashboard() {
   const [meetups, setMeetups] = useState([]);
-
-  function hanldeNewMeetup() {
-    history.push('/new-meetup');
-  }
-
-  function handleDetails(meetup) {
-    history.push('/meetup-details', { meetup });
-  }
 
   useEffect(() => {
     async function loadMeetups() {
@@ -36,22 +28,30 @@ export default function Dashboard() {
     loadMeetups();
   }, [meetups]);
 
+  function hanldeNewMeetup() {
+    history.push('/meetup-new');
+  }
+
+  function handleDetails(meetup) {
+    history.push(`/meetup-details/${meetup.id}`);
+  }
+
   return (
     <Container>
       <header>
         <strong>Meus meetups</strong>
         <Button onClick={hanldeNewMeetup}>
-          {/* <MdLoyalty size={20} color="#fff" /> */} Novo meetup
+          <MdLoyalty size={20} color="#fff" /> Novo meetup
         </Button>
       </header>
       <ul>
-        {meetups.map(item => (
-          <List key={item.id} onClick={() => handleDetails(meetups)} past={item.past}>
+        {meetups.map(meetup => (
+          <List key={meetup.id} onClick={() => handleDetails(meetup)} past={meetup.past}>
             <Title>
-              <strong>{item.title}</strong>
+              <strong>{meetup.title}</strong>
             </Title>
             <Date>
-              <span>{item.formattedDate}</span>
+              <span>{meetup.formattedDate}</span>
               <MdHighlightOff size={26} color="#ffff" />
             </Date>
           </List>
