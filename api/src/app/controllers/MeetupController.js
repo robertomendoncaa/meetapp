@@ -29,7 +29,7 @@ class MeetupController {
         },
         {
           model: File,
-          as: 'banner',
+          as: 'file',
           attributes: ['id', 'path', 'url'],
         },
       ],
@@ -60,7 +60,7 @@ class MeetupController {
         },
         {
           model: File,
-          as: 'banner',
+          as: 'file',
           attributes: ['id', 'path', 'url'],
         },
       ],
@@ -78,7 +78,7 @@ class MeetupController {
       past,
       cancelable,
       canceled_at,
-      banner,
+      file,
     } = meetapp;
 
     return res.status(200).json({
@@ -91,14 +91,14 @@ class MeetupController {
       past,
       cancelable,
       canceled_at,
-      banner,
+      file,
     });
   }
 
   async store(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string().required(),
-      banner_id: Yup.number().required(),
+      file_id: Yup.number().required(),
       description: Yup.string().required(),
       location: Yup.string().required(),
       date: Yup.date().required(),
@@ -125,7 +125,7 @@ class MeetupController {
   async update(req, res) {
     const schema = Yup.object().shape({
       title: Yup.string(),
-      banner_id: Yup.number(),
+      file_id: Yup.number(),
       description: Yup.string(),
       location: Yup.string(),
       date: Yup.date(),

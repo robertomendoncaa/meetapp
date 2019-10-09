@@ -46,7 +46,7 @@ export default function MeetupDetails({ match }) {
       </header>
       <Content>
         <Banner>
-          <img src={meetup.banner.url} alt="banner" />
+          <img src={meetup.file.url} alt="file" />
         </Banner>
         <div className="description">{meetup.description}</div>
         <div>

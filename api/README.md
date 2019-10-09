@@ -1,5 +1,5 @@
 ### Docker Container
-  - docker run --name database -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=meetapp -p 5433:5432 -d postgres
+  - docker run --name database_meetapp -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=database_meetapp -p 5432:5432 -d postgres
 
   - docker run --name mongomeetapp -p 27017:27017 -d -t mongo
   - docker run --name redismeetapp -p 6379:6379 -d -t redis:alpine

@@ -12,7 +12,7 @@ import { newMeetupRequest } from '~/store/modules/meetup/actions';
 import { Container } from './styles';
 
 const schema = Yup.object().shape({
-  banner_id: Yup.number().required(),
+  file_id: Yup.number().required(),
   title: Yup.string().required('Insira o título do meetup'),
   description: Yup.string().required('Descreva o seu meetup'),
   date: Yup.date().required('Insira uma data'),
@@ -22,8 +22,8 @@ const schema = Yup.object().shape({
 export default function New() {
   const dispatch = useDispatch();
 
-  function handleSubmit({ banner_id, title, description, date, location }) {
-    dispatch(newMeetupRequest(banner_id, title, description, date, location));
+  function handleSubmit({ file_id, title, description, date, location }) {
+    dispatch(newMeetupRequest(file_id, title, description, date, location));
   }
 
   return (

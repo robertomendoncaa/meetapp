@@ -17,10 +17,10 @@ export function failureMeetup() {
   };
 }
 
-export function newMeetupRequest(banner_id, title, description, date, location) {
+export function newMeetupRequest(file_id, title, description, date, location) {
   return {
     type: '@meetup/NEW_MEETUP_REQUEST',
-    payload: { banner_id, title, description, date, location },
+    payload: { file_id, title, description, date, location },
   };
 }
 
@@ -45,7 +45,7 @@ export function cancelMeetupSuccess() {
 
 export function editMeetupRequest(
   id,
-  banner_id,
+  file_id,
   title,
   description,
   date,
@@ -53,7 +53,7 @@ export function editMeetupRequest(
 ) {
   return {
     type: '@meetup/EDIT_MEETUP_REQUEST',
-    payload: { id, banner_id, title, description, date, location },
+    payload: { id, file_id, title, description, date, location },
   };
 }
 

@@ -36,10 +36,10 @@ export function* fetchMeetup() {
 
 export function* newMeetup({ payload }) {
   try {
-    const { banner_id, title, description, date, location } = payload;
+    const { file_id, title, description, date, location } = payload;
 
     yield call(api.post, 'meetups', {
-      banner_id,
+      file_id,
       title,
       description,
       date,
@@ -69,7 +69,7 @@ export function* cancelMeetup({ payload }) {
 
 export function* editMeetup({ payload }) {
   try {
-    const { id, banner_id, title, description, date, location } = payload;
+    const { id, file_id, title, description, date, location } = payload;
 
     const meetup = {
       id,
@@ -77,7 +77,7 @@ export function* editMeetup({ payload }) {
       description,
       date,
       location,
-      banner_id,
+      file_id,
     };
 
     yield call(api.put, `meetups/${id}`, meetup);

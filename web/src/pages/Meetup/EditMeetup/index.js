@@ -14,7 +14,7 @@ import { editMeetupRequest } from '~/store/modules/meetup/actions';
 import { Container } from './styles';
 
 const schema = Yup.object().shape({
-  banner_id: Yup.number().required(),
+  file_id: Yup.number().required(),
   title: Yup.string().required('Insira o título do meetup'),
   description: Yup.string().required('Descreva o seu meetup'),
   date: Yup.date().required('Insira uma data'),
@@ -33,23 +33,23 @@ export default function EditMeetup({ match }) {
     description: meetupFind.description,
     date: zonedTimeToUtc(meetupFind.defaultDate),
     location: meetupFind.location,
-    banner: {
-      url: meetupFind.banner.url,
-      id: meetupFind.banner.id,
-      path: meetupFind.banner.path,
+    file: {
+      url: meetupFind.file.url,
+      id: meetupFind.file.id,
+      path: meetupFind.file.path,
     },
   };
 
-  function handleSubmit({ banner_id, title, description, date, location }) {
+  function handleSubmit({ file_id, title, description, date, location }) {
     dispatch(
-      editMeetupRequest(meetupId, banner_id, title, description, date, location)
+      editMeetupRequest(meetupId, file_id, title, description, date, location)
     );
   }
 
   return (
     <Container>
       <Form schema={schema} initialData={currentMeetup} onSubmit={handleSubmit}>
-        <ImageInput name="banner_id" />
+        <ImageInput name="file_id" />
         <Input name="title" placeholder="Título do meetup" />
         <Input name="description" placeholder="Descrição completa" multiline />
         <DatePicker name="date" placeholder="Data do meetup" />
