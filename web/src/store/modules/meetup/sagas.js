@@ -13,13 +13,13 @@ import {
 
 export function* fetchMeetup() {
   try {
-    const response = yield call(api.get, 'organizing');
+    const response = yield call(api.get, 'meetups');
 
     const meetups = response.data.map(meetup => ({
       ...meetup,
-      past: isBefore(parseISO(meetup.date), new Date()),
-      defaultDate: meetup.date,
-      date: format(parseISO(meetup.date), "dd 'de' MMMM',' 'às' HH'h'", {
+      // past: isBefore(parseISO(meetup.date), new Date()),
+      // defaultDate: meetup.date,
+      formattedDate: format(parseISO(meetup.date), "d 'de' MMMM',' 'às' HH'h'", {
         locale: pt,
       }),
     }));

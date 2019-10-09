@@ -1,88 +1,68 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace } from 'react-icons/md';
-import { format, parseISO } from 'date-fns';
 import { toast } from 'react-toastify';
-import Loader from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 
-import api from '~/services/api';
+import { cancelMeetupRequest } from '~/store/modules/meetup/actions';
+
 import history from '~/services/history';
 
 import { Container, Button, Banner, Content } from './styles';
 
 export default function MeetupDetails({ match }) {
-  const [meetup, setMeetup] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const meetupId = Number(match.params.id);
+  const meetups = useSelector(state => state.meetup.meetups);
+  // const [meetup, setMeetup] = useState(null);
+  // const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
-  const { id } = match.params;
-
-  useEffect(() => {
-    async function loadMeetup() {
-      try {
-        const response = await api.get(`meetup-details/${id}`);
-        setMeetup({
-          ...response.data.meetup,
-          // subscriptions: response.data.subscriptions,
-          formattedDate: format(
-            parseISO(response.data.meetup.date),
-            "dd/MM/Y - HH'h'mm"
-          ),
-        });
-
-        setLoading(false);
-      } catch (err) {
-        // toast.error('Meetup not found');
-
-        // history.push('/');
-      }
-    }
-
-    loadMeetup();
-  }, [id]);
+  const meetup = meetups.find(m => m.id === meetupId);
 
   async function handleCancel() {
-
+    try {
+      dispatch(cancelMeetupRequest(meetupId));
+    } catch (error) {
+      toast.error('Houve um erro ao cancelar o meetup');
+    }
   }
 
   function handleEdit() {
-    // history.push(`/edit-meetup/${meetup.id}`, { meetup }); // passar ID do meetup
-    history.push(`/edit-meetup/`);
+    history.push(`/meetup-edit/${meetupId}`);
   }
 
   return (
     <Container>
-      {/* {loading ? (
-        <div className="loading">
-          <Loader type="TailSpin" color="#9a68ed" width={32} height={32} />
-        </div>
-        ) : ( */}
-        <header>
-          {/* <strong>Meetup</strong> */}
-          <strong>{meetup.title}</strong>
-            <div className="btn">
-              <Button type="button" className="btn-edit" onClick={handleEdit}>
-                <MdEdit size={20} color="#fff" /> Editar
-              </Button>
-              <Button type="button" className="btn-cancel" onClick={handleCancel}>
-                <MdDeleteForever size={20} color="#fff" /> Cancelar
-              </Button>
-            </div>
-        </header>
-        <Banner>
-          <img src={require('../../../assets/meetup.jpg')} alt="banner" />
-        </Banner>
-        <Content>
-          <div className="description">Meetup Criciuma Dev React Native</div>
-          <div>
-            <div className="info">
-              <MdInsertInvitation size={20} color="#fff" />
-              <span>10 de Outubro de 2019</span>
-
-              <MdPlace size={20} color="#fff" />
-              <span>Criciuma, SC</span>
-            </div>
+      <header>
+        <strong>{meetup.title}</strong>
+          <div className="btn">
+            <Button type="button" className="btn-edit" onClick={handleEdit}>
+              <MdEdit size={20} color="#fff" /> Editar
+            </Button>
+            <Button type="button" className="btn-cancel" onClick={handleCancel}>
+              <MdDeleteForever size={20} color="#fff" /> Cancelar
+            </Button>
           </div>
-        </Content>
-      {/* )} */}
+      </header>
+      <Content>
+        <Banner>
+          <img src={meetup.banner.url} alt="banner" />
+        </Banner>
+        <div className="description">{meetup.description}</div>
+        <div>
+          <div className="info">
+            <MdInsertInvitation size={20} color="#fff" />
+            <span>{meetup.formattedDate}</span>
+
+            <MdPlace size={20} color="#fff" />
+            <span>{meetup.location}</span>
+          </div>
+        </div>
+      </Content>
     </Container>
   );
 }
+
+MeetupDetails.propTypes = {
+  match: PropTypes.shape().isRequired,
+};

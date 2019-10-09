@@ -1,32 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdHighlightOff, MdLoyalty } from 'react-icons/md';
-import { format, parseISO } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { toast } from 'react-toastify';
+
+import { fetchMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
-import api from '~/services/api';
 
 import { Container, Button, List, Title, Date } from './styles';
 
 export default function Dashboard() {
-  const [meetups, setMeetups] = useState([]);
+  const dispatch = useDispatch();
+  const meetups = useSelector(state => state.meetup.meetups);
+  // const [meetups, setMeetups] = useState([]);
+
+  // useEffect(() => {
+  //   async function loadMeetups() {
+  //     const response = await api.get('meetups');
+
+  //     const data = response.data.map(meetup => ({
+  //       ...meetup,
+  //       formattedDate: format(parseISO(meetup.date), "d 'de' MMMM, 'às' HH'h'", {
+  //         locale: pt,
+  //       }),
+  //     }));
+
+  //     setMeetups(data);
+  //   }
+
+  //   loadMeetups();
+  // }, [meetups]);
 
   useEffect(() => {
-    async function loadMeetups() {
-      const response = await api.get('meetups');
-
-      const data = response.data.map(meetup => ({
-        ...meetup,
-        formattedDate: format(parseISO(meetup.date), "d 'de' MMMM, 'às' HH'h'", {
-          locale: pt,
-        }),
-      }));
-
-      setMeetups(data);
+    async function loadMeetup() {
+      try {
+        dispatch(fetchMeetupRequest());
+      } catch (error) {
+        toast.error('Houve um erro ao carregar os meetups');
+      }
     }
 
-    loadMeetups();
-  }, [meetups]);
+    loadMeetup();
+  }, [dispatch]);
 
   function hanldeNewMeetup() {
     history.push('/meetup-new');
