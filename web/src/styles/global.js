@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
@@ -41,5 +42,9 @@ export default createGlobalStyle`
 
   button {
     cursor: pointer;
+  }
+
+  .react-datepicker-wrapper, .react-datepicker__input-container, .react-datepicker-ignore-onclickoutside {
+    width: 100%;
   }
 `;

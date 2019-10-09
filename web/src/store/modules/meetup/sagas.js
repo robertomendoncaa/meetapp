@@ -1,9 +1,11 @@
 import { all, takeLatest, call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
 import pt from 'date-fns/locale/pt';
-import { format, parseISO, isBefore } from 'date-fns';
+import { format, parseISO } from 'date-fns';
+
 import api from '~/services/api';
 import history from '~/services/history';
+
 import {
   fetchMeetupSuccess,
   failureMeetup,
@@ -17,8 +19,7 @@ export function* fetchMeetup() {
 
     const meetups = response.data.map(meetup => ({
       ...meetup,
-      // past: isBefore(parseISO(meetup.date), new Date()),
-      // defaultDate: meetup.date,
+      defaultDate: meetup.date,
       formattedDate: format(parseISO(meetup.date), "d 'de' MMMM',' 'às' HH'h'", {
         locale: pt,
       }),
@@ -71,6 +72,7 @@ export function* editMeetup({ payload }) {
     const { id, banner_id, title, description, date, location } = payload;
 
     const meetup = {
+      id,
       title,
       description,
       date,
@@ -79,7 +81,9 @@ export function* editMeetup({ payload }) {
     };
 
     yield call(api.put, `meetups/${id}`, meetup);
+
     toast.success('Meetup editado com sucesso');
+
     history.push('/dashboard');
   } catch (error) {
     toast.error('Falha ao atualizar, verifique seus dados!');

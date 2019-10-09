@@ -1,34 +1,45 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import { toast } from 'react-toastify';
+import { MdAddCircleOutline } from 'react-icons/md';
+import * as Yup from 'yup';
 
-import api from '~/services/api';
+import ImageInput from '~/components/ImageInput';
+import DatePicker from '~/components/DatePicker';
+
+import { newMeetupRequest } from '~/store/modules/meetup/actions';
 
 import { Container } from './styles';
 
-export default function NewMeetup({ history }) {
+const schema = Yup.object().shape({
+  banner_id: Yup.number().required(),
+  title: Yup.string().required('Insira o título do meetup'),
+  description: Yup.string().required('Descreva o seu meetup'),
+  date: Yup.date().required('Insira uma data'),
+  location: Yup.string().required('Insira o local'),
+});
 
-  async function handleSubmit(data) {
-    try {
-      const response = await api.post('meetups', data);
-      const { id } = response.data;
+export default function New() {
+  const dispatch = useDispatch();
 
-      history.push(`/meetup-details/${id}`);
-    } catch (err) {
-      toast.error('Error' || 'Internal error!');
-    }
+  function handleSubmit({ banner_id, title, description, date, location }) {
+    dispatch(newMeetupRequest(banner_id, title, description, date, location));
   }
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form schema={schema} onSubmit={handleSubmit}>
+        <ImageInput name="file" />
 
-        <Input name="title" placeholder="Título do Meetup" />
-        <Input name="description" placeholder="Descrição completa" />
-        <Input name="date" type="date" placeholder="Data do meetup" />
+        <Input name="title" placeholder="Título do meetup" />
+        <Input name="description" placeholder="Descrição completa" multiline />
+        <DatePicker name="date" placeholder="Data do meetup" />
         <Input name="location" placeholder="Localização" />
 
-        <button type="submit">Salvar Meetup</button>
+        <button type="submit">
+          <MdAddCircleOutline size={20} />
+          Salvar meetup
+        </button>
       </Form>
     </Container>
   );

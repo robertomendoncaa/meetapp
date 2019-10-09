@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdHighlightOff, MdLoyalty } from 'react-icons/md';
+import { MdLoyalty, MdAddCircleOutline } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 import { fetchMeetupRequest } from '~/store/modules/meetup/actions';
@@ -14,29 +14,12 @@ export default function Dashboard() {
   const meetups = useSelector(state => state.meetup.meetups);
   // const [meetups, setMeetups] = useState([]);
 
-  // useEffect(() => {
-  //   async function loadMeetups() {
-  //     const response = await api.get('meetups');
-
-  //     const data = response.data.map(meetup => ({
-  //       ...meetup,
-  //       formattedDate: format(parseISO(meetup.date), "d 'de' MMMM, 'às' HH'h'", {
-  //         locale: pt,
-  //       }),
-  //     }));
-
-  //     setMeetups(data);
-  //   }
-
-  //   loadMeetups();
-  // }, [meetups]);
-
   useEffect(() => {
     async function loadMeetup() {
       try {
         dispatch(fetchMeetupRequest());
       } catch (error) {
-        toast.error('Houve um erro ao carregar os meetups');
+        toast.error('Erro ao carregar meetups');
       }
     }
 
@@ -56,7 +39,7 @@ export default function Dashboard() {
       <header>
         <strong>Meus meetups</strong>
         <Button onClick={hanldeNewMeetup}>
-          <MdLoyalty size={20} color="#fff" /> Novo meetup
+          <MdAddCircleOutline size={20} color="#fff" /> Novo meetup
         </Button>
       </header>
       <ul>
@@ -67,7 +50,7 @@ export default function Dashboard() {
             </Title>
             <Date>
               <span>{meetup.formattedDate}</span>
-              <MdHighlightOff size={26} color="#ffff" />
+              <MdLoyalty size={26} color="#ffff" />
             </Date>
           </List>
         ))}

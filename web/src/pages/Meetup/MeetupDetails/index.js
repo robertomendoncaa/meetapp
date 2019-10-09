@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -13,22 +13,22 @@ import { Container, Button, Banner, Content } from './styles';
 export default function MeetupDetails({ match }) {
   const meetupId = Number(match.params.id);
   const meetups = useSelector(state => state.meetup.meetups);
+  const dispatch = useDispatch();
   // const [meetup, setMeetup] = useState(null);
   // const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
 
   const meetup = meetups.find(m => m.id === meetupId);
+
+  function handleEdit() {
+    history.push(`/meetup-edit/${meetupId}`);
+  }
 
   async function handleCancel() {
     try {
       dispatch(cancelMeetupRequest(meetupId));
     } catch (error) {
-      toast.error('Houve um erro ao cancelar o meetup');
+      toast.error('Erro ao cancelar meetup');
     }
-  }
-
-  function handleEdit() {
-    history.push(`/meetup-edit/${meetupId}`);
   }
 
   return (
