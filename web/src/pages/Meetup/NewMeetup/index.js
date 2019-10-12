@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import { MdAddCircleOutline } from 'react-icons/md';
+import { MdSave } from 'react-icons/md';
 import * as Yup from 'yup';
 
 import ImageInput from '~/components/ImageInput';
@@ -37,7 +37,7 @@ export default function New() {
         <Input name="location" placeholder="Localização" />
 
         <button type="submit">
-          <MdAddCircleOutline size={20} />
+          <MdSave size={20} />
           Salvar meetup
         </button>
       </Form>

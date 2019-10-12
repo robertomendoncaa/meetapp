@@ -51,7 +51,7 @@ export const Button = styled.button`
     margin-right: 10px;
   }
 
-  &.btn-edit {
+  &.btn-blue {
     background: #4dbaf9;
 
     &:hover {
@@ -59,11 +59,20 @@ export const Button = styled.button`
     }
   }
 
-  &.btn-cancel {
+  &.btn-red {
     background: #d44059;
 
     &:hover {
       background: ${darken(0.09, '#D44059')};
+    }
+  }
+
+  &.btn-green {
+    font-size: 16px;
+    background: #28a745;
+
+    &:hover {
+      background: ${darken(0.09, '#28a745')};
     }
   }
 `;
@@ -109,8 +118,7 @@ export const Banner = styled.div`
     transition: opacity 0.2s;
 
     &:hover {
-      opacity: 0.8;
+      opacity: 0.9;
     }
   }
 `;
-

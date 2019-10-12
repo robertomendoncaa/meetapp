@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace } from 'react-icons/md';
+import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace, MdLoyalty } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
 import { cancelMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
+import api from '~/services/api';
 
 import { Container, Button, Banner, Content } from './styles';
 
@@ -14,10 +15,15 @@ export default function MeetupDetails({ match }) {
   const meetupId = Number(match.params.id);
   const meetups = useSelector(state => state.meetup.meetups);
   const dispatch = useDispatch();
-  // const [meetup, setMeetup] = useState(null);
-  // const [loading, setLoading] = useState(true);
-
   const meetup = meetups.find(m => m.id === meetupId);
+  const userId = useSelector(store => store.user.profile.id);
+
+  const id = useMemo(
+    () => ({
+      value: match.params.id,
+    }),
+    [match.params.id]
+  );
 
   function handleEdit() {
     history.push(`/meetup-edit/${meetupId}`);
@@ -31,22 +37,36 @@ export default function MeetupDetails({ match }) {
     }
   }
 
+  async function handleSubscribe(subscriber) {
+    try {
+      if (subscriber) {
+        await api.post(`subscriptions/${id}`);
+        toast.success(`Você se inscreveu no meetup: ${meetup.title}! ;)`);
+      } else {
+        await api.delete(`subscriptions/${id}`);
+        toast.warn(`Você não está mais inscrito no meetup: ${meetup.title}! ;)`);
+      }
+    } catch (error) {
+      toast.error('Erro ao se inscrever no meetup');
+    }
+  }
+
   return (
     <Container>
       <header>
         <strong>{meetup.title}</strong>
           <div className="btn">
-            <Button type="button" className="btn-edit" onClick={handleEdit}>
+            <Button type="button" className="btn-blue" onClick={handleEdit}>
               <MdEdit size={20} color="#fff" /> Editar
             </Button>
-            <Button type="button" className="btn-cancel" onClick={handleCancel}>
+            <Button type="button" className="btn-red" onClick={handleCancel}>
               <MdDeleteForever size={20} color="#fff" /> Cancelar
             </Button>
           </div>
       </header>
       <Content>
         <Banner>
-          <img src={meetup.file.url} alt="file" />
+          <img src={meetup.file.url} alt={meetup.title} />
         </Banner>
         <div className="description">{meetup.description}</div>
         <div>
@@ -57,6 +77,31 @@ export default function MeetupDetails({ match }) {
             <MdPlace size={20} color="#fff" />
             <span>{meetup.location}</span>
           </div>
+
+          <div className="subscriber">
+            {!meetup.canceled_at &&
+              !meetup.past &&
+              (meetup.user.id !== userId ? (
+                  <Button
+                    className="btn-green"
+                    onClick={() => handleSubscribe(true)}
+                    type="button"
+                  >
+                    <MdLoyalty size={20} color="#fff" />
+                    Inscrever-se
+                  </Button>
+                ) : (
+                  <Button
+                    className="btn-red"
+                    onClick={() => handleSubscribe(false)}
+                    type="button"
+                  >
+                    <MdLoyalty size={20} color="#fff" />
+                    Cancelar inscrição
+                  </Button>
+                ))}
+            </div>
+
         </div>
       </Content>
     </Container>

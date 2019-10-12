@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
-import { MdAddCircleOutline } from 'react-icons/md';
+import { MdSave } from 'react-icons/md';
 import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { zonedTimeToUtc } from 'date-fns-tz';
@@ -26,17 +26,17 @@ export default function EditMeetup({ match }) {
   const meetups = useSelector(state => state.meetup.meetups);
   const dispatch = useDispatch();
 
-  const meetupFind = meetups.find(m => m.id === meetupId);
+  const meetup = meetups.find(m => m.id === meetupId);
 
   const currentMeetup = {
-    title: meetupFind.title,
-    description: meetupFind.description,
-    date: zonedTimeToUtc(meetupFind.defaultDate),
-    location: meetupFind.location,
+    title: meetup.title,
+    description: meetup.description,
+    date: zonedTimeToUtc(meetup.defaultDate),
+    location: meetup.location,
     file: {
-      url: meetupFind.file.url,
-      id: meetupFind.file.id,
-      path: meetupFind.file.path,
+      url: meetup.file.url,
+      id: meetup.file.id,
+      path: meetup.file.path,
     },
   };
 
@@ -56,7 +56,7 @@ export default function EditMeetup({ match }) {
         <Input name="location" placeholder="Localização" />
 
         <button type="submit" onClick={handleSubmit}>
-          <MdAddCircleOutline size={20} /> Salvar meetup
+          <MdSave size={20} /> Salvar meetup
         </button>
       </Form>
     </Container>
