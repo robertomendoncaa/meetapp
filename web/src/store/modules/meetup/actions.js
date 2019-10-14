@@ -43,6 +43,19 @@ export function cancelMeetupSuccess() {
   };
 }
 
+export function subscribeMeetupRequest(id) {
+  return {
+    type: '@meetup/SUBSCRIBE_MEETUP_REQUEST',
+    payload: { id },
+  };
+}
+
+export function subscribeMeetupSuccess() {
+  return {
+    type: '@meetup/SUBSCRIBE_MEETUP_SUCCESS',
+  };
+}
+
 export function editMeetupRequest(
   id,
   file_id,

@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React, {  useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace, MdLoyalty } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-import { cancelMeetupRequest } from '~/store/modules/meetup/actions';
+import { cancelMeetupRequest, subscribeMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
 import api from '~/services/api';
@@ -18,12 +18,6 @@ export default function MeetupDetails({ match }) {
   const meetup = meetups.find(m => m.id === meetupId);
   const userId = useSelector(store => store.user.profile.id);
 
-  const id = useMemo(
-    () => ({
-      value: match.params.id,
-    }),
-    [match.params.id]
-  );
 
   function handleEdit() {
     history.push(`/meetup-edit/${meetupId}`);
@@ -37,15 +31,16 @@ export default function MeetupDetails({ match }) {
     }
   }
 
-  async function handleSubscribe(subscriber) {
+  async function handleSubscribe() {
     try {
-      if (subscriber) {
-        await api.post(`subscriptions/${id}`);
-        toast.success(`Você se inscreveu no meetup: ${meetup.title}! ;)`);
-      } else {
-        await api.delete(`subscriptions/${id}`);
-        toast.warn(`Você não está mais inscrito no meetup: ${meetup.title}! ;)`);
-      }
+      dispatch(subscribeMeetupRequest(meetupId));
+      // if (subscriber) {
+      //   await api.post(`subscriptions/${id}`);
+      //   toast.success(`Inscrição realizada com sucesso no meetup: ${meetup.title}`);
+      // } else {
+      //   await api.delete(`subscriptions/${id}`);
+      //   toast.warn(`Você não está mais inscrito no meetup: ${meetup.title}`);
+      // }
     } catch (error) {
       toast.error('Erro ao se inscrever no meetup');
     }
@@ -78,7 +73,7 @@ export default function MeetupDetails({ match }) {
             <span>{meetup.location}</span>
           </div>
 
-          <div className="subscriber">
+          <div>
             {!meetup.canceled_at &&
               !meetup.past &&
               (meetup.user.id !== userId ? (

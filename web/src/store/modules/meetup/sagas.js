@@ -11,6 +11,7 @@ import {
   failureMeetup,
   newMeetupSuccess,
   cancelMeetupSuccess,
+  subscribeMeetupSuccess,
 } from './actions';
 
 export function* fetchMeetup() {
@@ -90,9 +91,25 @@ export function* editMeetup({ payload }) {
   }
 }
 
+export function* subscribeMeetup({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield call(api.post, `subscriptions/${id}`);
+    toast.success('Inscrição realizada com sucesso');
+
+    yield put(subscribeMeetupSuccess());
+
+    // history.push(`/meetup-details/${id}`);
+  } catch (error) {
+    toast.error('Falha ao se increver no meetup!');
+  }
+}
+
 export default all([
   takeLatest('@meetup/FETCH_MEETUPS_REQUEST', fetchMeetup),
   takeLatest('@meetup/NEW_MEETUP_REQUEST', newMeetup),
   takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup),
   takeLatest('@meetup/EDIT_MEETUP_REQUEST', editMeetup),
+  takeLatest('@meetup/SUBSCRIBE_MEETUP_REQUEST', subscribeMeetup),
 ]);
