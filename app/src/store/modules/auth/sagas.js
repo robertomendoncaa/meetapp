@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import { takeLatest, call, put, all } from 'redux-saga/effects';
+import { takeLatest, call, put, all, delay } from 'redux-saga/effects';
 
 import api from '~/services/api';
 
@@ -18,10 +18,12 @@ export function* signIn({ payload }) {
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
+    yield delay(1000);
+
     yield put(signInSuccess(token, user));
 
   } catch (err) {
-    Alert.alert('Erro no login, verifique seus dados!');
+    Alert.alert('Erro', 'Erro no login, verifique seus dados!');
 
     yield put(signFailure());
   }
@@ -38,7 +40,7 @@ export function* signUp({ payload }) {
     });
 
   } catch (err) {
-    Alert.alert('Falha na cadastro, verifique seus dados!');
+    Alert.alert('Erro', 'Falha na cadastro, verifique seus dados!');
 
     yield put(signFailure());
   }
