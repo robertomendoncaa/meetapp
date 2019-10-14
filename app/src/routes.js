@@ -1,4 +1,3 @@
-// add Routes and Background gradient
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 // import { createBottomTabNavigator } from 'react-navigation-tabs';
 
