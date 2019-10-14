@@ -1,13 +1,19 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, StatusBar } from 'react-native';
 
+import Routes from '~/routes';
+
+import Background from '~/components/Background';
+
 export default function App() {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView style={styles.container}>
-        <Text>Meetapp</Text>
-      </SafeAreaView>
+      <Background>
+        <StatusBar barStyle="light-content" backgroundColor="#22202c" />
+        <SafeAreaView style={styles.container}>
+          <Routes />
+        </SafeAreaView>
+      </Background>
     </>
   );
 };
