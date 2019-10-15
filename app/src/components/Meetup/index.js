@@ -3,7 +3,17 @@ import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Banner, Info, Title, Date, Location, Organizer, ButtonSubscribe, ButtonText } from './styles';
+import {
+  Container,
+  Banner,
+  Info,
+  Title,
+  Date,
+  Location,
+  Organizer,
+  ButtonSubscribe,
+  ButtonText,
+} from './styles';
 
 export default function Meetup({ data, onSubscribe }) {
   return (
