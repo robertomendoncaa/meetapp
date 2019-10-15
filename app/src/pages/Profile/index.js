@@ -5,17 +5,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import { Container } from './styles';
 import Background from '~/components/Background'
 
-export default function Dashboard() {
+export default function Profile() {
   return (
     <Background>
-      <Text style={{color:'#fff'}}>Dashboard</Text>
+      <Text style={{color:'#fff'}}>Perfil</Text>
     </Background>
   );
 }
 
-Dashboard.navigationOptions = {
-  tabBarLabel: 'Meetups',
+Profile.navigationOptions = {
+  tabBarLabel: 'Perfil',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="person" size={20} color={tintColor} />
   ),
 };

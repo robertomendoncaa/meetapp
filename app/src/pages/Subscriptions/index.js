@@ -5,17 +5,17 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 // import { Container } from './styles';
 import Background from '~/components/Background'
 
-export default function Dashboard() {
+export default function Subscriptions() {
   return (
     <Background>
-      <Text style={{color:'#fff'}}>Dashboard</Text>
+      <Text style={{color:'#fff'}}>Inscrições</Text>
     </Background>
   );
 }
 
-Dashboard.navigationOptions = {
-  tabBarLabel: 'Meetups',
+Subscriptions.navigationOptions = {
+  tabBarLabel: 'Inscrições',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="local-offer" size={20} color={tintColor} />
   ),
 };
