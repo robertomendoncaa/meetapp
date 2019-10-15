@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Banner, Info, Title, Date, Location, Organizer, ButtonSubscribe, ButtonText } from './styles';
 
-export default function Meetup({ data }) {
+export default function Meetup({ data, onSubscribe }) {
   return (
     <Container past={data.past}>
       <Banner source={{ uri: data.file.url }} />
@@ -14,6 +14,7 @@ export default function Meetup({ data }) {
         <Title>{data.title}</Title>
         <Date>
           <Icon name="event" size={14} color="#999" />
+          {/* {data.formattedDate} */}
             {format(
               parseISO(data.date),
               " d' de' MMMM yyyy', às' HH'h",
@@ -23,11 +24,13 @@ export default function Meetup({ data }) {
         <Location>
           <Icon name="location-on" size={14} color="#999" /> {data.location}
         </Location>
-        <Organizer>Organizador: {data.user.name}</Organizer>
+        <Organizer>
+          <Icon name="person" size={16} color="#999" /> Organizador: {data.user.name}
+        </Organizer>
       </Info>
 
       {!data.past ? (
-        <ButtonSubscribe>
+        <ButtonSubscribe onPress={onSubscribe}>
           <ButtonText>Inscrever-se</ButtonText>
         </ButtonSubscribe>
       ) : (

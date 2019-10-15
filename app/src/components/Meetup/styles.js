@@ -38,8 +38,8 @@ export const Location = styled.Text`
 export const Organizer = styled.Text`
   margin-top: 5px;
   font-size: 14;
-  font-weight: bold;
-  color: #666;
+  /* font-weight: bold; */
+  color: #999;
 `;
 export const ButtonSubscribe = styled.TouchableOpacity`
   height: 42px;

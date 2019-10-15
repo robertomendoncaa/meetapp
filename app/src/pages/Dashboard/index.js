@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { View, Text } from 'react-native';
+import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Title, List } from './styles';
@@ -23,7 +23,20 @@ export default function Dashboard() {
     loadMeetups();
   }, []);
 
-  // async function handleSubscribe() {}
+  async function handleSubscribe(id) {
+    try {
+      await api.post(`subscriptions/${id}`);
+      Alert.alert(
+        'Sucesso :)',
+        'Inscrição realizada com sucesso!',
+      );
+    } catch (err) {
+      Alert.alert(
+        'Erro :(',
+        'Falha ao realizar inscrição',
+      );
+    }
+  }
 
   return (
     <Background>
@@ -38,10 +51,13 @@ export default function Dashboard() {
           renderItem={({ item }) => (
             <Meetup
               data={item}
+              onSubscribe={() => handleSubscribe(item.id)}
               // file={item.file}
               // title={item.title}
-              // date={item.dateParsed}
+              // date={item.date}
               // location={item.location}
+              // past={item.past}
+              // handleSubscribe={() => handleSubscribe(item.id)}
             />
           )}
         />
