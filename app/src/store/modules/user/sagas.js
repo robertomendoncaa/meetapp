@@ -18,11 +18,11 @@ export function* updateProfile({ payload }) {
 
     const response = yield call(api.put, 'users', profile);
 
-    Alert.alert('Sucesso!', 'Perfil atualizado com sucesso! ');
+    Alert.alert('Sucesso :)', 'Perfil atualizado com sucesso! ');
 
     yield put(updateProfileSuccess(response.data));
   } catch (err) {
-    Alert.alert('Falha na atualização', 'Erro ao atualizar perfil, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha ao atualizar perfil, verifique seus dados!');
 
     yield put(updateProfileFailure());
   }

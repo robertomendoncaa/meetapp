@@ -23,7 +23,7 @@ export function* signIn({ payload }) {
     yield put(signInSuccess(token, user));
 
   } catch (err) {
-    Alert.alert('Erro', 'Erro no login, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha no login, verifique seus dados!');
 
     yield put(signFailure());
   }
@@ -40,7 +40,7 @@ export function* signUp({ payload }) {
     });
 
   } catch (err) {
-    Alert.alert('Erro', 'Falha na cadastro, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha na cadastro, verifique seus dados!');
 
     yield put(signFailure());
   }

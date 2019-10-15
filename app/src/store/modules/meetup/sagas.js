@@ -28,7 +28,7 @@ export function* fetchMeetup() {
     yield put(fetchMeetupSuccess(meetups));
   } catch (error) {
 
-    Alert.alert('Erro', 'Erro ao listar meetups');
+    Alert.alert('Erro :(', 'Falha ao listar meetups');
 
     yield put(failureMeetup());
   }
@@ -46,13 +46,13 @@ export function* newMeetup({ payload }) {
       location,
     });
 
-    Alert.alert('Sucesso!', 'Meetup criado com sucesso');
+    Alert.alert('Sucesso :)', 'Meetup criado com sucesso');
 
     yield put(newMeetupSuccess());
 
     history.push('/dashboard');
   } catch (error) {
-    Alert.alert('Erro', 'Falha ao cadastrar o meetup, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha ao cadastrar o meetup, verifique seus dados!');
   }
 }
 
@@ -62,13 +62,13 @@ export function* cancelMeetup({ payload }) {
 
     yield call(api.delete, `meetups/${id}`);
 
-    Alert.alert('Sucesso', 'Meetup cancelado com sucesso');
+    Alert.alert('Sucesso :)', 'Meetup cancelado com sucesso');
 
     yield put(cancelMeetupSuccess());
 
     history.push('/dashboard');
   } catch (error) {
-    Alert.alert('Erro', 'Falha ao cancelar o meetup, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha ao cancelar o meetup, verifique seus dados!');
   }
 }
 
@@ -87,11 +87,11 @@ export function* editMeetup({ payload }) {
 
     yield call(api.put, `meetups/${id}`, meetup);
 
-    Alert.alert('Sucesso', 'Meetup editado com sucesso');
+    Alert.alert('Sucesso :)', 'Meetup editado com sucesso');
 
     history.push('/dashboard');
   } catch (error) {
-    Alert.alert('Erro', 'Falha ao atualizar, verifique seus dados!');
+    Alert.alert('Erro :(', 'Falha ao atualizar, verifique seus dados!');
   }
 }
 
@@ -100,12 +100,12 @@ export function* subscribeMeetup({ payload }) {
     const { id } = payload;
 
     yield call(api.post, `subscriptions/${id}`);
-    Alert.alert('Sucesso', 'Inscrição realizada com sucesso');
+    Alert.alert('Sucesso :)', 'Inscrição realizada com sucesso');
 
     yield put(subscribeMeetupSuccess());
 
   } catch (error) {
-    Alert.alert('Erro', 'Falha ao se increver no meetup!');
+    Alert.alert('Erro :(', 'Falha ao se increver no meetup!');
   }
 }
 
