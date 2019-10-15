@@ -1,14 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+// import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// import { Container } from './styles';
+import { Container, Title } from './styles';
+
 import Background from '~/components/Background'
+import Header from '~/components/Header'
 
 export default function Dashboard() {
   return (
     <Background>
-      <Text style={{color:'#fff'}}>Dashboard</Text>
+      <Header />
+      <Container>
+        <Title>Dashboard</Title>
+      </Container>
     </Background>
   );
 }
