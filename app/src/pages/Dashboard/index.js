@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Title, List } from './styles';
 
+import api from '~/services/api';
+
 import Background from '~/components/Background'
 import Header from '~/components/Header'
 import Meetup from '~/components/Meetup'
 
-const meetups = [1, 2, 3, 4, 5];
-
 export default function Dashboard() {
+  const [meetups, setMeetups] = useState([]);
+
+  useEffect(() => {
+    async function loadMeetups() {
+      const response = await api.get('meetups');
+
+      setMeetups(response.data);
+    }
+
+    loadMeetups();
+  }, []);
 
   // async function handleSubscribe() {}
 
@@ -20,12 +31,17 @@ export default function Dashboard() {
       <Container>
         {/* <Title>Dashboard</Title> */}
 
+
         <List
           data={meetups}
-          keyExtractor={item => String(item)}
+          keyExtractor={item => String(item.id)}
           renderItem={({ item }) => (
             <Meetup
               data={item}
+              // file={item.file}
+              // title={item.title}
+              // date={item.dateParsed}
+              // location={item.location}
             />
           )}
         />

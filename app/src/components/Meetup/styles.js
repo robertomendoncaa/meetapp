@@ -5,6 +5,8 @@ export const Container = styled.View`
   border-radius: 4px;
   margin-bottom: 20px;
   overflow: hidden;
+
+  opacity: ${props => (props.past ? 0.7 : 1)};
 `;
 export const Banner = styled.Image.attrs({
   resizeMode: 'cover',
@@ -36,6 +38,7 @@ export const Location = styled.Text`
 export const Organizer = styled.Text`
   margin-top: 5px;
   font-size: 14;
+  font-weight: bold;
   color: #666;
 `;
 export const ButtonSubscribe = styled.TouchableOpacity`
@@ -46,6 +49,8 @@ export const ButtonSubscribe = styled.TouchableOpacity`
   align-self: stretch;
   align-items: center;
   background: green;
+
+  /* disabled */
 `;
 export const ButtonText = styled.Text`
   font-size: 16px;

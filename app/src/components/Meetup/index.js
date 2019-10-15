@@ -1,28 +1,44 @@
-import React from 'react';
-// import { TouchableOpacity } from 'react-native';
+import React, { useMemo } from 'react';
+import { parseISO, formatRelative } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Banner, Info, Title, Date, Location, Organizer, ButtonSubscribe, ButtonText } from './styles';
 
-export default function Meetup() {
+export default function Meetup({ data }) {
+
+  // const dateParsed = useMemo(() => {
+  //   return formatRelative(parseISO(data.date), new Date(), {
+  //     locale: pt,
+  //     addSuffix: true,
+  //   });
+  // },
+  // [data.date]);
+
   return (
-    <Container>
-      <Banner source={require('../../assets/meetup.jpg')} />
+    <Container past={data.past}>
+      <Banner source={{ uri: data.file.url }} />
 
       <Info>
-        <Title>Meetup React Native</Title>
+        <Title>{data.title}</Title>
         <Date>
-          <Icon name="event" size={14} color="#999" /> 10 de Novembro, às 20h
+          <Icon name="event" size={14} color="#999" /> {data.date}
         </Date>
         <Location>
-          <Icon name="location-on" size={14} color="#999" /> Florianópolis, SC
+          <Icon name="location-on" size={14} color="#999" /> {data.location}
         </Location>
-        <Organizer>Organizador: Rocketseat!</Organizer>
+        <Organizer>Organizador: {data.user.name}</Organizer>
       </Info>
 
-      <ButtonSubscribe>
-        <ButtonText>Inscrever-se</ButtonText>
-      </ButtonSubscribe>
+      {!data.past ? (
+        <ButtonSubscribe>
+          <ButtonText>Inscrever-se</ButtonText>
+        </ButtonSubscribe>
+      ) : (
+        <ButtonSubscribe style={{backgroundColor: '#F94D6A'}}>
+          <ButtonText>Encerrado</ButtonText>
+        </ButtonSubscribe>
+      )}
     </Container>
   );
 }
