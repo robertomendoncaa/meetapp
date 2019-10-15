@@ -1,20 +1,11 @@
-import React, { useMemo } from 'react';
-import { parseISO, formatRelative } from 'date-fns';
+import React from 'react';
+import { parseISO, format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { Container, Banner, Info, Title, Date, Location, Organizer, ButtonSubscribe, ButtonText } from './styles';
 
 export default function Meetup({ data }) {
-
-  // const dateParsed = useMemo(() => {
-  //   return formatRelative(parseISO(data.date), new Date(), {
-  //     locale: pt,
-  //     addSuffix: true,
-  //   });
-  // },
-  // [data.date]);
-
   return (
     <Container past={data.past}>
       <Banner source={{ uri: data.file.url }} />
@@ -22,7 +13,12 @@ export default function Meetup({ data }) {
       <Info>
         <Title>{data.title}</Title>
         <Date>
-          <Icon name="event" size={14} color="#999" /> {data.date}
+          <Icon name="event" size={14} color="#999" />
+            {format(
+              parseISO(data.date),
+              " d' de' MMMM yyyy', às' HH'h",
+              { locale: pt }
+            )}
         </Date>
         <Location>
           <Icon name="location-on" size={14} color="#999" /> {data.location}
