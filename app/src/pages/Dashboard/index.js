@@ -2,17 +2,34 @@ import React from 'react';
 // import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Title } from './styles';
+import { Container, Title, List } from './styles';
 
 import Background from '~/components/Background'
 import Header from '~/components/Header'
+import Meetup from '~/components/Meetup'
+
+const meetups = [1, 2, 3, 4, 5];
 
 export default function Dashboard() {
+
+  // async function handleSubscribe() {}
+
   return (
     <Background>
       <Header />
       <Container>
-        <Title>Dashboard</Title>
+        {/* <Title>Dashboard</Title> */}
+
+        <List
+          data={meetups}
+          keyExtractor={item => String(item)}
+          renderItem={({ item }) => (
+            <Meetup
+              data={item}
+            />
+          )}
+        />
+
       </Container>
     </Background>
   );
