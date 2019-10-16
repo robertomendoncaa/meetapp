@@ -5,8 +5,8 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const DateSelect = styled.View`
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin: 10px;
+  /* margin-bottom: 10px; */
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -27,8 +27,9 @@ export const List = styled.FlatList.attrs({
 })``;
 
 export const Text = styled.Text`
-  margin: 0 15px;
-  color: #fff;
-  font-size: 20px;
-  font-weight: bold;
+  color: #999;
+  font-size: 18px;
+  text-align: center;
+  line-height: 26px;
+  margin: 30px;
 `;

@@ -24,12 +24,12 @@ export default function Meetup({ data, handleSubscribe }) {
         <Title>{data.title}</Title>
         <Date>
           <Icon name="event" size={14} color="#999" />
-          {data.formattedDate}
-            {/* {format(
+          {/* {data.formattedDate} */}
+            {format(
               parseISO(data.date),
               " d' de' MMMM yyyy', às' HH'h",
               { locale: pt }
-            )} */}
+            )}
         </Date>
         <Location>
           <Icon name="location-on" size={14} color="#999" /> {data.location}
