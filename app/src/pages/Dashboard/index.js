@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { format, parseISO, isBefore, subDays, addDays } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
-import { Container, Title, List } from './styles';
+import { Container, DateSelect, DateButton, DateFormatted, List, Text } from './styles';
 
 import api from '~/services/api';
 
@@ -12,14 +14,30 @@ import Meetup from '~/components/Meetup'
 
 export default function Dashboard() {
   const [meetups, setMeetups] = useState([]);
+  const [date, setDate] = useState(new Date());
+
+  const dateFormatted = useMemo(
+    () => format(date, "d 'de' MMMM", { locale: pt }),
+    [date]
+  );
 
   useEffect(() => {
     async function loadMeetups() {
-      const response = await api.get('meetups');
+      const response = await api.get('meetups', {
+        params: { date },
+      });
 
-      setMeetups(response.data);
+      const data = response.data.map(meetup => ({
+        ...meetup,
+        past: isBefore(parseISO(meetup.date), new Date()),
+        // defaultDate: meetup.date,
+        date: format(parseISO(meetup.date), "dd 'de' MMMM',' 'às' HH'h'", {
+          locale: pt,
+        }),
+      }));
+
+      setMeetups(data);
     }
-
     loadMeetups();
   }, []);
 
@@ -38,29 +56,50 @@ export default function Dashboard() {
     }
   }
 
+  function handlePrevDay() {
+    setDate(subDays(date, 1));
+  }
+
+  function handleNextDay() {
+    setDate(addDays(date, 1));
+  }
+
   return (
     <Background>
-      <Header />
       <Container>
-        {/* <Title>Dashboard</Title> */}
+        <Header />
 
+        <DateSelect>
+          <DateButton onPress={handlePrevDay}>
+            <Icon name="chevron-left" size={36} color="#fff" />
+          </DateButton>
+          <DateFormatted>{dateFormatted}</DateFormatted>
+          <DateButton onPress={handleNextDay}>
+            <Icon name="chevron-right" size={36} color="#fff" />
+          </DateButton>
+        </DateSelect>
 
-        <List
-          data={meetups}
-          keyExtractor={item => String(item.id)}
-          renderItem={({ item }) => (
-            <Meetup
-              data={item}
-              onSubscribe={() => handleSubscribe(item.id)}
-              // file={item.file}
-              // title={item.title}
-              // date={item.date}
-              // location={item.location}
-              // past={item.past}
-              // handleSubscribe={() => handleSubscribe(item.id)}
-            />
-          )}
-        />
+        {/* {meetups.length ? ( */}
+          <List
+            data={meetups}
+            keyExtractor={item => String(item.id)}
+            renderItem={({ item }) => (
+              <Meetup
+                data={item}
+                // onSubscribe={() => handleSubscribe(item.id)}
+                // file={item.file.url}
+                // title={item.title}
+                // date={item.dateFormatted}
+                // location={item.location}
+                // user={item.user.name}
+                // past={item.past}
+                handleSubscribe={() => handleSubscribe(item.id)}
+              />
+            )}
+          />
+        {/* ) : (
+          <Text>Nenhum meetup cadastrado para este dia :/</Text>
+        )} */}
 
       </Container>
     </Background>

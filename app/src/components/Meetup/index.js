@@ -15,7 +15,7 @@ import {
   ButtonText,
 } from './styles';
 
-export default function Meetup({ data, onSubscribe }) {
+export default function Meetup({ data, handleSubscribe }) {
   return (
     <Container past={data.past}>
       <Banner source={{ uri: data.file.url }} />
@@ -24,12 +24,12 @@ export default function Meetup({ data, onSubscribe }) {
         <Title>{data.title}</Title>
         <Date>
           <Icon name="event" size={14} color="#999" />
-          {/* {data.formattedDate} */}
-            {format(
+          {data.formattedDate}
+            {/* {format(
               parseISO(data.date),
               " d' de' MMMM yyyy', às' HH'h",
               { locale: pt }
-            )}
+            )} */}
         </Date>
         <Location>
           <Icon name="location-on" size={14} color="#999" /> {data.location}
@@ -40,7 +40,7 @@ export default function Meetup({ data, onSubscribe }) {
       </Info>
 
       {!data.past ? (
-        <ButtonSubscribe onPress={onSubscribe}>
+        <ButtonSubscribe onPress={handleSubscribe}>
           <ButtonText>Inscrever-se</ButtonText>
         </ButtonSubscribe>
       ) : (
