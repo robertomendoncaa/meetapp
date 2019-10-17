@@ -20,11 +20,21 @@ function Dashboard({ isFocused }) {
   const [loading, setLoading] = useState(true);
   const [refreshing] = useState(false);
   const [page, setPage] = useState(1);
-  const [hasMorePages, setHasMorePages] = useState(false);
+
+  const dateFormatted = useMemo(
+    () => format(date, "d' de' MMMM yyyy", { locale: pt }),
+    [date]
+  );
+
+  useEffect(() => {
+    if (isFocused) {
+      setLoading(true);
+      loadMeetups();
+    }
+  // eslint-disable-next-line
+  }, [isFocused, date]);
 
   async function loadMeetups(selectedPage = 1) {
-    if (selectedPage > 1 && !hasMorePages) return;
-
     const response = await api.get('meetups', {
       params: { date, page: selectedPage },
     });
@@ -34,42 +44,9 @@ function Dashboard({ isFocused }) {
         ? [...meetups, ...response.data]
         : response.data
     );
-    setHasMorePages(response.data.totalPages > selectedPage);
     setPage(selectedPage);
     setLoading(false);
   }
-
-  useEffect(() => {
-    if (isFocused) {
-      setLoading(true);
-      loadMeetups();
-    }
-  }, [isFocused, date]); // eslint-disable-line
-
-  const dateFormatted = useMemo(
-    () => format(date, "d 'de' MMMM yyyy", { locale: pt }),
-    [date]
-  );
-
-  // useEffect(() => {
-  //   async function loadMeetups() {
-  //     const response = await api.get('meetups', {
-  //       params: { date },
-  //     });
-
-  //     const data = response.data.map(meetup => ({
-  //       ...meetup,
-  //       past: isBefore(parseISO(meetup.date), new Date()),
-  //       // defaultDate: meetup.date,
-  //       date: format(parseISO(meetup.date), "dd 'de' MMMM',' 'às' HH'h'", {
-  //         locale: pt,
-  //       }),
-  //     }));
-
-  //     setMeetups(data);
-  //   }
-  //   loadMeetups();
-  // }, []);
 
   async function handleSubscribe(id) {
     try {
@@ -119,13 +96,6 @@ function Dashboard({ isFocused }) {
               renderItem={({ item }) => (
                 <Meetup
                   data={item}
-                  // onSubscribe={() => handleSubscribe(item.id)}
-                  // file={item.file.url}
-                  // title={item.title}
-                  // date={item.dateFormatted}
-                  // location={item.location}
-                  // user={item.user.name}
-                  // past={item.past}
                   handleSubscribe={() => handleSubscribe(item.id)}
                 />
               )}
@@ -149,6 +119,5 @@ Dashboard.navigationOptions = {
     <Icon name="format-list-bulleted" size={20} color={tintColor} />
   ),
 };
-
 
 export default withNavigationFocus(Dashboard);
