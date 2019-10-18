@@ -39,7 +39,8 @@ class SubscriptionController {
       include: [
         {
           model: User,
-          attributes: ['name', 'email', 'id'],
+          as: 'user',
+          attributes: ['id', 'name', 'email'],
         },
       ],
     });
@@ -56,11 +57,12 @@ class SubscriptionController {
 
     const checkDate = await Subscription.findOne({
       where: {
-        user_id: user.id,
+        user_id: userId,
       },
       include: [
         {
           model: Meetup,
+          as: 'meetup',
           required: true,
           where: {
             date: meetup.date,
@@ -76,7 +78,7 @@ class SubscriptionController {
     }
 
     const subscription = await Subscription.create({
-      user_id: user.id,
+      user_id: userId,
       meetup_id: meetup.id,
     });
 
@@ -97,6 +99,7 @@ class SubscriptionController {
     return res.json(subscription);
   }
 
+  // ARRUMAR A FUNCAO, NAO TENHO subscribers
   async delete(req, res) {
     const meetup = await Meetup.findOne({ where: { id: req.params.id } });
 
