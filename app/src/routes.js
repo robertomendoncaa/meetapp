@@ -30,8 +30,8 @@ export default (isSigned = false) =>
               style: {
                 backgroundColor: '#2B1A2F',
                 borderTopColor: '#2B1A2F',
-                height: 50,
-                padding: 5,
+                height: 60,
+                padding: 7,
                 // elevation: 0,
               },
             },

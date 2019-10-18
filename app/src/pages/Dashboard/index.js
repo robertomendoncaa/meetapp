@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -6,6 +7,7 @@ import { format, parseISO, isBefore, subDays, addDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
+import { subscribeMeetupRequest } from '~/store/modules/meetup/actions';
 
 import { Container, DateSelect, DateButton, DateFormatted, List, Text } from './styles';
 
@@ -15,6 +17,7 @@ import Meetup from '~/components/Meetup';
 import Loading from '~/components/Loading';
 
 function Dashboard({ isFocused }) {
+  const dispatch = useDispatch();
   const [meetups, setMeetups] = useState([]);
   const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
@@ -25,14 +28,6 @@ function Dashboard({ isFocused }) {
     () => format(date, "d' de' MMMM yyyy", { locale: pt }),
     [date]
   );
-
-  useEffect(() => {
-    if (isFocused) {
-      setLoading(true);
-      loadMeetups();
-    }
-  // eslint-disable-next-line
-  }, [isFocused, date]);
 
   async function loadMeetups(selectedPage = 1) {
     const response = await api.get('meetups', {
@@ -48,7 +43,16 @@ function Dashboard({ isFocused }) {
     setLoading(false);
   }
 
+  useEffect(() => {
+    if (isFocused) {
+      setLoading(true);
+      loadMeetups();
+    }
+  // eslint-disable-next-line
+  }, [isFocused, date]);
+
   async function handleSubscribe(id) {
+    // dispatch(subscribeMeetupRequest(id));
     try {
       await api.post(`subscriptions/${id}`);
       Alert.alert(
@@ -116,7 +120,7 @@ function Dashboard({ isFocused }) {
 Dashboard.navigationOptions = {
   tabBarLabel: 'Meetups',
   tabBarIcon: ({ tintColor }) => (
-    <Icon name="format-list-bulleted" size={20} color={tintColor} />
+    <Icon name="format-list-bulleted" size={26} color={tintColor} />
   ),
 };
 

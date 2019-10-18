@@ -38,7 +38,6 @@ export const Location = styled.Text`
 export const Organizer = styled.Text`
   margin-top: 5px;
   font-size: 14;
-  /* font-weight: bold; */
   color: #999;
 `;
 export const ButtonSubscribe = styled.TouchableOpacity`
@@ -49,11 +48,18 @@ export const ButtonSubscribe = styled.TouchableOpacity`
   align-self: stretch;
   align-items: center;
   background: green;
-
-  /* disabled */
 `;
 export const ButtonText = styled.Text`
   font-size: 16px;
   font-weight: bold;
   color: #fff;
+`;
+export const CancelButton = styled.TouchableOpacity`
+  height: 42px;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  align-self: stretch;
+  align-items: center;
+  background: #F94D6A;
 `;

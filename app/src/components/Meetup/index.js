@@ -13,9 +13,10 @@ import {
   Organizer,
   ButtonSubscribe,
   ButtonText,
+  CancelButton
 } from './styles';
 
-export default function Meetup({ data, handleSubscribe }) {
+export default function Meetup({ data, handleSubscribe, handleCancel }) {
   return (
     <Container past={data.past}>
       <Banner source={{ uri: data.file.url }} />
@@ -27,7 +28,7 @@ export default function Meetup({ data, handleSubscribe }) {
           {/* {data.formattedDate} */}
             {format(
               parseISO(data.date),
-              " d' de' MMMM yyyy', às' HH'h",
+              " d' de' MMMM yyyy', às' HH:mm'h",
               { locale: pt }
             )}
         </Date>
@@ -39,7 +40,7 @@ export default function Meetup({ data, handleSubscribe }) {
         </Organizer>
       </Info>
 
-      {!data.past ? (
+      {handleSubscribe && !data.past ? (
         <ButtonSubscribe onPress={handleSubscribe}>
           <ButtonText>Inscrever-se</ButtonText>
         </ButtonSubscribe>
@@ -48,6 +49,11 @@ export default function Meetup({ data, handleSubscribe }) {
           <ButtonText>Encerrado</ButtonText>
         </ButtonSubscribe>
       )}
+
+      {handleCancel && (
+        <CancelButton onPress={handleCancel}>Cancelar Inscrição</CancelButton>
+      )}
+
     </Container>
   );
 }
