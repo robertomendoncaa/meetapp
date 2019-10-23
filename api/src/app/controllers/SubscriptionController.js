@@ -78,7 +78,7 @@ class SubscriptionController {
     }
 
     const subscription = await Subscription.create({
-      user_id: userId,
+      user_id: req.userId,
       meetup_id: meetup.id,
     });
 
@@ -99,30 +99,21 @@ class SubscriptionController {
     return res.json(subscription);
   }
 
-  // ARRUMAR A FUNCAO, NAO TENHO subscribers
   async delete(req, res) {
-    const meetup = await Meetup.findOne({ where: { id: req.params.id } });
+    const user_id = req.userId;
+    const subscribe = await Meetup.findOne({ where: { id: req.params.id } });
 
-    if (!meetup)
-      return res.status(400).json({ error: 'This meetup does not exists!' });
+    if (meetup.user_id !== user_id) {
+      return res.status(401).json({ error: 'Not authorized' });
+    }
 
-    if (meetup.past)
-      return res
-        .status(400)
-        .json({ error: 'You can not unsubscribe a finished meetup!' });
+    if (meetup.past) {
+      return res.status(400).json({ error: 'You can not unsubscribe past meetups' });
+    }
 
-    if (!meetup.subscribers.includes(req.userId))
-      return res.status(400).json({ error: 'You are not subscribed!' });
+    await subscribe.destroy();
 
-    const removeFromSubs = subs => {
-      subs.splice(subs.indexOf(req.userId), 1);
-      return subs;
-    };
-    const subscribers = removeFromSubs(meetup.subscribers);
-
-    await meetup.update({ subscribers });
-
-    return res.send();
+    return res.json({ status: true });
   }
 
 }

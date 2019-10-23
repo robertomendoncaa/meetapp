@@ -41,6 +41,7 @@ routes.get('/organizing/:id', OrganizingController.show);
 
 routes.get('/subscriptions', SubscriptionController.index);
 routes.post('/subscriptions/:id', SubscriptionController.store);
+// routes.post('/meetups/:meetupId/subscriptions', SubscriptionController.store);
 routes.delete('/subscriptions/:id', SubscriptionController.delete);
 
 routes.get('/notifications', NotificationController.index);
