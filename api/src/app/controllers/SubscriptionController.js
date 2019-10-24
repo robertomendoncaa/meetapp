@@ -35,14 +35,8 @@ class SubscriptionController {
 
   async store(req, res) {
     const user = await User.findByPk(req.userId);
-    const meetup = await Meetup.findByPk(req.params.meetupId, {
-      include: [
-        {
-          model: User,
-          as: 'user',
-          attributes: ['id', 'name', 'email'],
-        },
-      ],
+    const meetup = await Meetup.findByPk(req.params.id, {
+      include: [User],
     });
 
     if (meetup.user_id === req.userId) {
@@ -57,12 +51,11 @@ class SubscriptionController {
 
     const checkDate = await Subscription.findOne({
       where: {
-        user_id: userId,
+        user_id: user.id,
       },
       include: [
         {
           model: Meetup,
-          as: 'meetup',
           required: true,
           where: {
             date: meetup.date,
@@ -78,16 +71,16 @@ class SubscriptionController {
     }
 
     const subscription = await Subscription.create({
-      user_id: req.userId,
+      user_id: user.id,
       meetup_id: meetup.id,
     });
 
     const formattedDate = format(
-      meetup.date, "'day' dd 'of' MMMM', at' H:mm'h'  ", { locale: pt }
+      meetup.date, "dd 'de' MMMM', às' H:mm'h'", { locale: pt }
     );
 
     await Notification.create({
-      content: `New subscriber ${user.name} for your Meetup, ${formattedDate}`,
+      content: `Nova inscrição de (${user.name}) para o Meetup: (${meetup.title}, dia ${formattedDate})`,
       user: meetup.user_id,
     });
 
@@ -100,20 +93,15 @@ class SubscriptionController {
   }
 
   async delete(req, res) {
-    const user_id = req.userId;
-    const subscribe = await Meetup.findOne({ where: { id: req.params.id } });
+    const subscription = await Subscription.findByPk(req.params.id);
 
-    if (meetup.user_id !== user_id) {
-      return res.status(401).json({ error: 'Not authorized' });
+    if (!subscription) {
+      return res.status(400).json({ error: 'Subscription not found' });
     }
 
-    if (meetup.past) {
-      return res.status(400).json({ error: 'You can not unsubscribe past meetups' });
-    }
+    await subscription.destroy();
 
-    await subscribe.destroy();
-
-    return res.json({ status: true });
+    return res.send();
   }
 
 }

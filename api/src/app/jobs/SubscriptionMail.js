@@ -10,7 +10,7 @@ class SubscriptionMail {
 
     await Mail.sendMail({
       to: `${meetup.User.name} <${meetup.User.email}>`,
-      subject: `[${meetup.title}] Have a new subscription`,
+      subject: `[${meetup.title}] Nova inscrição!!!`,
       template: 'subscription',
       context: {
         organizer: meetup.User.name,
