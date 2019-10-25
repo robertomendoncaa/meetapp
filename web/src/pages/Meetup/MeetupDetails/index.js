@@ -1,13 +1,12 @@
-import React, {  useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace, MdLoyalty } from 'react-icons/md';
+import { MdEdit, MdDeleteForever, MdInsertInvitation, MdPlace } from 'react-icons/md';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
-import { cancelMeetupRequest, subscribeMeetupRequest } from '~/store/modules/meetup/actions';
+import { cancelMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
-import api from '~/services/api';
 
 import { Container, Button, Banner, Content } from './styles';
 
@@ -16,7 +15,6 @@ export default function MeetupDetails({ match }) {
   const meetups = useSelector(state => state.meetup.meetups);
   const dispatch = useDispatch();
   const meetup = meetups.find(m => m.id === meetupId);
-  const userId = useSelector(store => store.user.profile.id);
 
 
   function handleEdit() {
@@ -28,21 +26,6 @@ export default function MeetupDetails({ match }) {
       dispatch(cancelMeetupRequest(meetupId));
     } catch (error) {
       toast.error('Erro ao cancelar meetup');
-    }
-  }
-
-  async function handleSubscribe() {
-    try {
-      dispatch(subscribeMeetupRequest(meetupId));
-      // if (subscriber) {
-      //   await api.post(`subscriptions/${id}`);
-      //   toast.success(`Inscrição realizada com sucesso no meetup: ${meetup.title}`);
-      // } else {
-      //   await api.delete(`subscriptions/${id}`);
-      //   toast.warn(`Você não está mais inscrito no meetup: ${meetup.title}`);
-      // }
-    } catch (error) {
-      toast.error('Erro ao se inscrever no meetup');
     }
   }
 
@@ -72,31 +55,6 @@ export default function MeetupDetails({ match }) {
             <MdPlace size={20} color="#fff" />
             <span>{meetup.location}</span>
           </div>
-
-          <div>
-            {!meetup.canceled_at &&
-              !meetup.past &&
-              (meetup.user.id !== userId ? (
-                  <Button
-                    className="btn-green"
-                    onClick={() => handleSubscribe(true)}
-                    type="button"
-                  >
-                    <MdLoyalty size={20} color="#fff" />
-                    Inscrever-se
-                  </Button>
-                ) : (
-                  <Button
-                    className="btn-red"
-                    onClick={() => handleSubscribe(false)}
-                    type="button"
-                  >
-                    <MdLoyalty size={20} color="#fff" />
-                    Cancelar inscrição
-                  </Button>
-                ))}
-            </div>
-
         </div>
       </Content>
     </Container>

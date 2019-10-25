@@ -75,8 +75,6 @@ class MeetupController {
       location,
       date,
       user,
-      past,
-      cancelable,
       canceled_at,
       file,
     } = meetapp;
@@ -88,8 +86,6 @@ class MeetupController {
       location,
       date,
       user,
-      past,
-      cancelable,
       canceled_at,
       file,
     });

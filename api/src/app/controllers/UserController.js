@@ -46,7 +46,7 @@ class UserController {
 
     await Notification.create({
       user: id,
-      content: `Welcome to Meetapp!`,
+      content: 'Bem vindo ao Meetapp!',
     });
 
     return res.json({

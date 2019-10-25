@@ -7,14 +7,13 @@ import api from '~/services/api';
 import history from '~/services/history';
 
 import {
-  fetchMeetupSuccess,
+  loadMeetupSuccess,
   failureMeetup,
   newMeetupSuccess,
   cancelMeetupSuccess,
-  subscribeMeetupSuccess,
 } from './actions';
 
-export function* fetchMeetup() {
+export function* loadMeetup() {
   try {
     const response = yield call(api.get, 'meetups');
 
@@ -26,10 +25,10 @@ export function* fetchMeetup() {
       }),
     }));
 
-    yield put(fetchMeetupSuccess(meetups));
+    yield put(loadMeetupSuccess(meetups));
   } catch (error) {
 
-    toast.error(`Erro ao listar meetups`);
+    toast.error('Erro ao listar meetups');
 
     yield put(failureMeetup());
   }
@@ -64,7 +63,7 @@ export function* cancelMeetup({ payload }) {
     yield put(cancelMeetupSuccess());
     history.push('/dashboard');
   } catch (error) {
-    toast.error('Falha ao cancelar o meetup, verifique seus dados!');
+    toast.error('Erro ao cancelar, verifique seus dados, apenas organizadores podem cancelar o meetup');
   }
 }
 
@@ -91,25 +90,9 @@ export function* editMeetup({ payload }) {
   }
 }
 
-export function* subscribeMeetup({ payload }) {
-  try {
-    const { id } = payload;
-
-    yield call(api.post, `subscriptions/${id}`);
-    toast.success('Inscrição realizada com sucesso');
-
-    yield put(subscribeMeetupSuccess());
-
-    // history.push(`/meetup-details/${id}`);
-  } catch (error) {
-    toast.error('Falha ao se increver no meetup!');
-  }
-}
-
 export default all([
-  takeLatest('@meetup/FETCH_MEETUPS_REQUEST', fetchMeetup),
+  takeLatest('@meetup/LOAD_MEETUPS_REQUEST', loadMeetup),
   takeLatest('@meetup/NEW_MEETUP_REQUEST', newMeetup),
   takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup),
   takeLatest('@meetup/EDIT_MEETUP_REQUEST', editMeetup),
-  takeLatest('@meetup/SUBSCRIBE_MEETUP_REQUEST', subscribeMeetup),
 ]);

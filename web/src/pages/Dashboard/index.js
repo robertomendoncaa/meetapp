@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdLoyalty, MdAddCircleOutline } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
-import { fetchMeetupRequest } from '~/store/modules/meetup/actions';
+import { loadMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
 
@@ -17,7 +17,7 @@ export default function Dashboard() {
   useEffect(() => {
     async function loadMeetup() {
       try {
-        dispatch(fetchMeetupRequest());
+        dispatch(loadMeetupRequest());
       } catch (error) {
         toast.error('Erro ao carregar meetups');
       }

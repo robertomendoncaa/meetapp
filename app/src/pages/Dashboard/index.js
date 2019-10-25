@@ -109,7 +109,7 @@ function Dashboard({ isFocused }) {
               onEndReachedThreshold={0.2}
             />
          ) : (
-          <Text>Não foi encontrado nenhum Meetup cadastrado para este dia :(</Text>
+          <Text>Não foi encontrado nenhum Meetup cadastrado para este dia</Text>
         ))}
 
       </Container>

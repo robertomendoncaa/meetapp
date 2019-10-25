@@ -36,7 +36,11 @@ class SubscriptionController {
   async store(req, res) {
     const user = await User.findByPk(req.userId);
     const meetup = await Meetup.findByPk(req.params.id, {
-      include: [User],
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: ['id', 'name'],
+      }],
     });
 
     if (meetup.user_id === req.userId) {
@@ -56,6 +60,7 @@ class SubscriptionController {
       include: [
         {
           model: Meetup,
+          as: 'meetup',
           required: true,
           where: {
             date: meetup.date,
