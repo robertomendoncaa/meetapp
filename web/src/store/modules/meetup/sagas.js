@@ -86,7 +86,7 @@ export function* editMeetup({ payload }) {
 
     history.push('/dashboard');
   } catch (error) {
-    toast.error('Falha ao atualizar, verifique seus dados!');
+    toast.error('Falha ao atualizar, verifique seus dados, apenas organizadores podem editar o meetup');
   }
 }
 

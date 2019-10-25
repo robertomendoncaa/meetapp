@@ -18,7 +18,7 @@ export default function MeetupDetails({ match }) {
 
 
   function handleEdit() {
-    history.push(`/meetup-edit/${meetupId}`);
+    history.push(`/meetup/${meetupId}/edit`);
   }
 
   async function handleCancel() {
