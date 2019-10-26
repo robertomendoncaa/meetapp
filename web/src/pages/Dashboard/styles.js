@@ -17,6 +17,17 @@ export const Container = styled.div`
       font-size: 32px;
     }
   }
+
+  p {
+    display: flex;
+    font-size: 26px;
+    color: rgba(255, 255, 255, 0.3);
+    margin-bottom: 300px;
+
+    svg {
+      margin-right: 15px;
+    }
+  }
 `;
 
 export const Button = styled.button`
@@ -76,4 +87,10 @@ export const Date = styled.div`
     color: #999;
     margin-right: 20px;
   }
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 `;

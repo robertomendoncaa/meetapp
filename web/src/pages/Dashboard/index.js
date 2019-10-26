@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { MdLoyalty, MdAddCircleOutline } from 'react-icons/md';
+import { MdLoyalty, MdAddCircleOutline, MdChevronLeft, MdChevronRight, MdHighlightOff } from 'react-icons/md';
 import { toast } from 'react-toastify';
 
 import { loadMeetupRequest } from '~/store/modules/meetup/actions';
 
 import history from '~/services/history';
 
-import { Container, Button, List, Title, Date } from './styles';
+import { Container, Button, List, Title, Date, Pagination } from './styles';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -37,24 +37,41 @@ export default function Dashboard() {
   return (
     <Container>
       <header>
-        <strong>Meus meetups</strong>
+        <strong>Meetups</strong>
         <Button onClick={hanldeNewMeetup}>
           <MdAddCircleOutline size={20} color="#fff" /> Novo meetup
         </Button>
       </header>
-      <ul>
-        {meetups.map(meetup => (
-          <List key={meetup.id} onClick={() => handleDetails(meetup)} past={meetup.past}>
-            <Title>
-              <strong>{meetup.title}</strong>
-            </Title>
-            <Date>
-              <span>{meetup.formattedDate}</span>
-              <MdLoyalty size={26} color="#ffff" />
-            </Date>
-          </List>
-        ))}
-      </ul>
+
+      {meetups.length > 0 ? (
+        <ul>
+          {meetups.map(meetup => (
+            <List key={meetup.id} onClick={() => handleDetails(meetup)} past={meetup.past}>
+              <Title>
+                <strong>{meetup.title}</strong>
+              </Title>
+              <Date>
+                <span>{meetup.formattedDate}</span>
+                <MdLoyalty size={26} color="#fff" />
+              </Date>
+            </List>
+          ))}
+        </ul>
+      ) : (
+        <p>
+          <MdHighlightOff size={32} color="#F94D6A" />
+          Não foi encontrado nenhum Meetup cadastrado
+        </p>
+      )}
+
+      <Pagination>
+        <Button>
+          <MdChevronLeft size={30} color="#fff" />
+        </Button>
+        <Button>
+          <MdChevronRight size={30} color="#fff" />
+        </Button>
+      </Pagination>
     </Container>
   );
 }
