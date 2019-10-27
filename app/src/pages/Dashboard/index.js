@@ -48,7 +48,6 @@ function Dashboard({ isFocused }) {
       setLoading(true);
       loadMeetups();
     }
-  // eslint-disable-next-line
   }, [isFocused, date]);
 
   async function handleSubscribe(id) {

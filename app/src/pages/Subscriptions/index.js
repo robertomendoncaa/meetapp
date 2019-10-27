@@ -1,4 +1,6 @@
 import React, { useState, useEffect }  from 'react';
+import { format, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import { withNavigationFocus } from 'react-navigation';
 import { Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -13,23 +15,31 @@ import Meetup from '~/components/Meetup';
 import Loading from '~/components/Loading';
 
 function Subscriptions({ isFocused }) {
-  const [subscriptions, setSubscriptions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing] = useState(false);
+  const [meetups, setMeetups] = useState([]);
 
   async function loadSubscriptions() {
-    setLoading(true);
-
     const response = await api.get('subscriptions');
-
-    setSubscriptions(response.data);
+    const subscriptions = response.data.map(subs => ({
+      ...subs.meetup,
+      formattedDate: format(
+        parseISO(subs.meetup.date),
+        "d 'de' MMMM 'de' yyyy 'às' HH:mm",
+        { locale: pt }
+      ),
+    }));
+    setMeetups(subscriptions);
     setLoading(false);
   }
 
   useEffect(() => {
     if (isFocused) {
+      setLoading(true);
       loadSubscriptions();
     }
   }, [isFocused]);
+
 
   async function handleCancel(id) {
     try {
@@ -50,16 +60,18 @@ function Subscriptions({ isFocused }) {
         {loading && <Loading />}
 
         {!loading &&
-          (subscriptions.length ? (
+          (meetups.length ? (
           <List
-            data={subscriptions}
+            data={meetups}
             keyExtractor={item => String(item.id)}
             renderItem={({ item }) => (
               <Meetup
-                data={item.meetup}
+                data={item}
                 handleCancel={() => handleCancel(item.id)}
               />
             )}
+            onRefresh={loadSubscriptions}
+            refreshing={refreshing}
           />
         ) : (
           <Text>Você ainda não está inscrito em nenhum Meetup</Text>

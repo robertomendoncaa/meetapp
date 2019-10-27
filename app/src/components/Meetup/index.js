@@ -25,10 +25,9 @@ export default function Meetup({ data, handleSubscribe, handleCancel }) {
         <Title>{data.title}</Title>
         <Date>
           <Icon name="event" size={14} color="#999" />
-            {/* {data.formattedDate} */}
-              {format(parseISO(data.date), " d' de' MMMM yyyy', às' HH:mm'h",
-                { locale: pt }
-              )}
+            {format(parseISO(data.date), " d' de' MMMM yyyy', às' HH:mm'h",
+              { locale: pt }
+            )}
         </Date>
         <Location>
           <Icon name="location-on" size={14} color="#999" /> {data.location}
@@ -38,18 +37,16 @@ export default function Meetup({ data, handleSubscribe, handleCancel }) {
         </Organizer>
       </Info>
 
-      {handleSubscribe && !data.past ? (
+      {handleSubscribe && !data.past && (
         <ButtonSubscribe onPress={handleSubscribe}>
           <ButtonText>Inscrever-se</ButtonText>
-        </ButtonSubscribe>
-      ) : (
-        <ButtonSubscribe style={{backgroundColor: '#F94D6A'}}>
-          <ButtonText>Encerrado</ButtonText>
         </ButtonSubscribe>
       )}
 
       {handleCancel && (
-        <CancelButton onPress={handleCancel}>Cancelar Inscrição</CancelButton>
+        <CancelButton onPress={handleCancel}>
+          <ButtonText>Cancelar Inscrição</ButtonText>
+        </CancelButton>
       )}
 
     </Container>
