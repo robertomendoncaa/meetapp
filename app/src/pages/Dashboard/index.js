@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Alert } from 'react-native';
 import { withNavigationFocus } from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { format, parseISO, isBefore, subDays, addDays } from 'date-fns';
+import { format, subDays, addDays } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
@@ -51,19 +51,19 @@ function Dashboard({ isFocused }) {
   }, [isFocused, date]);
 
   async function handleSubscribe(id) {
-    // dispatch(subscribeMeetupRequest(id));
-    try {
-      await api.post(`subscriptions/${id}`);
-      Alert.alert(
-        'Sucesso :)',
-        'Inscrição realizada com sucesso!',
-      );
-    } catch (error) {
-      Alert.alert(
-        'Erro :(',
-        'Falha ao realizar inscrição',
-      );
-    }
+    dispatch(subscribeMeetupRequest(id));
+    // try {
+    //   await api.post(`subscriptions/${id}`);
+    //   Alert.alert(
+    //     'Sucesso :)',
+    //     'Inscrição realizada com sucesso!',
+    //   );
+    // } catch (error) {
+    //   Alert.alert(
+    //     'Erro :(',
+    //     'Falha ao realizar inscrição',
+    //   );
+    // }
   }
 
   function handlePrevDay() {

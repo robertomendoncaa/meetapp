@@ -107,13 +107,23 @@ class SubscriptionController {
   }
 
   async delete(req, res) {
-    const subscription = await Subscription.findByPk(req.params.id);
+    const { id } = req.params;
+    const meetup = Meetup.findByPk(id);
+    const subscription = await Subscription.findOne({
+      where: { user_id: req.userId, meetup_id: id },
+    });
 
     if (!subscription) {
-      return res.status(400).json({ error: 'Subscription not found' });
+      return res.status(404).json({ error: 'Subscription not found' });
     }
 
-    await subscription.destroy();
+    if (isBefore(new Date(meetup.date), new Date())) {
+      return res.status(400).json({
+        error: "Can't cancel the subscription of past meetups",
+      });
+    }
+
+    Subscription.destroy({ where: { meetup_id: id } });
 
     return res.send();
   }

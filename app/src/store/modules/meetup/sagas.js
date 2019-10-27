@@ -6,14 +6,15 @@ import { format, parseISO } from 'date-fns';
 import api from '~/services/api';
 
 import {
-  fetchMeetupSuccess,
+  loadMeetupSuccess,
   failureMeetup,
   newMeetupSuccess,
   cancelMeetupSuccess,
   subscribeMeetupSuccess,
+  cancelSubscriptionSuccess
 } from './actions';
 
-export function* fetchMeetup() {
+export function* loadMeetup() {
   try {
     const response = yield call(api.get, 'meetups');
 
@@ -25,7 +26,7 @@ export function* fetchMeetup() {
       }),
     }));
 
-    yield put(fetchMeetupSuccess(meetups));
+    yield put(loadMeetupSuccess(meetups));
   } catch (error) {
 
     Alert.alert('Erro :(', 'Falha ao listar meetups');
@@ -105,14 +106,29 @@ export function* subscribeMeetup({ payload }) {
     yield put(subscribeMeetupSuccess());
 
   } catch (error) {
-    Alert.alert('Erro :(', 'Falha ao se increver no meetup!');
+    Alert.alert('Erro :(', 'Falha ao realizar inscrição');
+  }
+}
+
+export function* cancelSubscription({ payload }) {
+  try {
+    const { id } = payload;
+
+    yield call(api.delete, `subscriptions/${id}`);
+    Alert.alert('Sucesso', 'Inscrição cancelada com sucesso');
+
+    yield put(cancelSubscriptionSuccess());
+
+  } catch (error) {
+    Alert.alert('Erro', 'Falha ao cancelar inscrição');
   }
 }
 
 export default all([
-  takeLatest('@meetup/FETCH_MEETUPS_REQUEST', fetchMeetup),
+  takeLatest('@meetup/LOAD_MEETUPS_REQUEST', loadMeetup),
   takeLatest('@meetup/NEW_MEETUP_REQUEST', newMeetup),
   takeLatest('@meetup/CANCEL_MEETUP_REQUEST', cancelMeetup),
   takeLatest('@meetup/EDIT_MEETUP_REQUEST', editMeetup),
   takeLatest('@meetup/SUBSCRIBE_MEETUP_REQUEST', subscribeMeetup),
+  takeLatest('@meetup/CANCEL_SUBSCRIPTION_REQUEST', cancelSubscription),
 ]);

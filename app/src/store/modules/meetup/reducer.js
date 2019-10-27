@@ -8,11 +8,11 @@ const INITIAL_STATE = {
 export default function meetup(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case '@meetup/FETCH_MEETUPS_REQUEST': {
+      case '@meetup/LOAD_MEETUPS_REQUEST': {
         draft.loading = true;
         break;
       }
-      case '@meetup/FETCH_MEETUPS_SUCCESS': {
+      case '@meetup/LOAD_MEETUPS_SUCCESS': {
         draft.loading = false;
         draft.meetups = action.payload.meetups;
         break;
@@ -50,6 +50,14 @@ export default function meetup(state = INITIAL_STATE, action) {
         break;
       }
       case '@meetup/SUBSCRIBE_MEETUP_SUCCESS': {
+        draft.loading = false;
+        break;
+      }
+      case '@meetup/CANCEL_SUBSCRIPTION_REQUEST': {
+        draft.loading = true;
+        break;
+      }
+      case '@meetup/CANCEL_SUBSCRIPTION_SUCCESS': {
         draft.loading = false;
         break;
       }

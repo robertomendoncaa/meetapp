@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -11,7 +10,6 @@ import { updateProfileRequest } from '~/store/modules/user/actions';
 
 import {
   Container,
-  Title,
   Separator,
   Form,
   FormInput,
