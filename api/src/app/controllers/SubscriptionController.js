@@ -4,6 +4,7 @@ import pt from 'date-fns/locale/pt-BR';
 
 import User from '../models/User';
 import Meetup from '../models/Meetup';
+import File from '../models/File';
 import Subscription from '../models/Subscription';
 
 import Notification from '../schemas/Notification';
@@ -19,15 +20,23 @@ class SubscriptionController {
       include: [
         {
           model: Meetup,
-          where: {
-            date: {
-              [Op.gt]: new Date(),
+          as: 'meetup',
+          attributes: ['id', 'title', 'description', 'location', 'date'],
+          include: [
+            {
+              model: User,
+              as: 'user',
+              attributes: ['id', 'name', 'email'],
             },
-          },
-          required: true,
+            {
+              model: File,
+              as: 'file',
+              attributes: ['id', 'url', 'path'],
+            },
+          ],
         },
       ],
-      order: [[Meetup, 'date']],
+      order: [['meetup', 'date']],
     });
 
     return res.json(subscriptions);
