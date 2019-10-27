@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdLoyalty, MdAddCircleOutline, MdChevronLeft, MdChevronRight, MdHighlightOff } from 'react-icons/md';
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const meetups = useSelector(state => state.meetup.meetups);
   // const [meetups, setMeetups] = useState([]);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     async function loadMeetup() {
