@@ -24,7 +24,9 @@ docker run --name redismeetapp -p 6379:6379 -d -t redis:alpine
 #### Criação das tabelas do banco de dados
 Cria as tabelas do banco de dados a partir das migrations da pasta `src/database/migrations`
 
-`yarn migrate`
+```
+yarn sequelize db:migrate
+```
 
 > Renomear arquivo `.env.example` para `.env`
 
@@ -36,4 +38,25 @@ Cria as tabelas do banco de dados a partir das migrations da pasta `src/database
   yarn dev
 # monitoramento de filas, envio de e-mails
   yarn queue
+```
+
+#### Instalação do Frontend
+Instale as dependências dentro da pasta `meetapp/web`
+```
+cd meetapp/web
+yarn
+```
+#### Rodar Frontend
+```
+yarn start
+```
+
+#### Instalação do Aplicativo android (app mobile)
+```
+cd meetapp/app
+yarn
+```
+#### Rodar App
+```
+react-native run-android
 ```
