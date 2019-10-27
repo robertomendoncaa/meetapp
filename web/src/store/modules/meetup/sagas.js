@@ -16,6 +16,7 @@ import {
 export function* loadMeetup() {
   try {
     const response = yield call(api.get, 'meetups');
+    // const response = yield call(api.get, 'organizing');
 
     const meetups = response.data.map(meetup => ({
       ...meetup,

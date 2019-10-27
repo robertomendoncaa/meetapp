@@ -12,7 +12,6 @@ import { Container, Button, List, Title, Date, Pagination } from './styles';
 export default function Dashboard() {
   const dispatch = useDispatch();
   const meetups = useSelector(state => state.meetup.meetups);
-  // const [meetups, setMeetups] = useState([]);
   const [page, setPage] = useState(1);
 
   useEffect(() => {

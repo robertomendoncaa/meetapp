@@ -45,14 +45,14 @@ function Subscriptions({ isFocused }) {
 
 
   async function handleCancel(id) {
-    // dispatch(cancelSubscriptionRequest(id));
-    try {
-      await api.delete(`subscriptions/${id}`);
-      Alert.alert('Sucesso', 'Sua inscrição foi cancelada');
-      loadSubscriptions();
-    } catch (error) {
-      Alert.alert('Error', 'Falha ao cancelar inscrição');
-    }
+    dispatch(cancelSubscriptionRequest(id));
+    // try {
+    //   await api.delete(`subscriptions/${id}`);
+    //   Alert.alert('Sucesso', 'Sua inscrição foi cancelada');
+    //   loadSubscriptions();
+    // } catch (error) {
+    //   Alert.alert('Error', 'Falha ao cancelar inscrição');
+    // }
   }
 
 
