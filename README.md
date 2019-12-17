@@ -1,6 +1,9 @@
 # MeetApp
 Projeto desenvolvido como desafio final e certificação do [Bootcamp GoStack da Rocketseat.](https://rocketseat.com.br/bootcamp)
 
+## Certificado
+[Certificado de conclusão](https://github.com/robertomendoncaa/meetapp/blob/master/certificate/certificado.pdf)
+
 ## Instalação
 ### Requerimentos
 Para rodar essa aplicação completa é necessário o [NodeJs](https://nodejs.org/en/), [ReactJs](https://reactjs.org), [React Native](https://facebook.github.io/react-native/), [Docker](https://www.docker.com) e emulador android ([Android Studio](https://developer.android.com/studio) ou [Genymotion](https://www.genymotion.com)).
