@@ -4,6 +4,11 @@ Projeto desenvolvido como desafio final e certificação do [Bootcamp GoStack da
 ## Certificado
 [Certificado de conclusão](https://github.com/robertomendoncaa/meetapp/blob/master/certificate/certificado.pdf)
 
+## Screenshots
+[Login](https://github.com/robertomendoncaa/meetapp/blob/master/assets/screenshots/login.png), [Register](https://github.com/robertomendoncaa/meetapp/blob/master/assets/screenshots/register.png), [Dashboard](https://github.com/robertomendoncaa/meetapp/blob/master/assets/screenshots/dashboard.png), 
+[Details](https://github.com/robertomendoncaa/meetapp/blob/master/assets/screenshots/details.png), 
+[Profile](https://github.com/robertomendoncaa/meetapp/blob/master/assets/screenshots/profile.png).
+
 ## Instalação
 ### Requerimentos
 Para rodar essa aplicação completa é necessário o [NodeJs](https://nodejs.org/en/), [ReactJs](https://reactjs.org), [React Native](https://facebook.github.io/react-native/), [Docker](https://www.docker.com) e emulador android ([Android Studio](https://developer.android.com/studio) ou [Genymotion](https://www.genymotion.com)).
